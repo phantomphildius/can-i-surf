@@ -5,7 +5,8 @@ const baseURL = `https://magicseaweed.com/api/${process.env.magic_seaweed_api_ke
 const units = 'us';
 const apiInstance = axios.create({ baseURL });
 
-export const getForecast = (spot_id: number) => {
+export const getRemoteForecast = (spot_id: number) => {
+  console.log(baseURL);
   return apiInstance.get<Forecast>('/forecast', {
     params: {
       spot_id,
