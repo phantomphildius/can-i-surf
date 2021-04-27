@@ -10,9 +10,8 @@ interface SwellForecast {
 }
 
 export interface Forecast {
-  timeStamp: number;
-  localeTimeStamp: number;
-  issueTimeStamp: number;
+  id: string;
+  localTimestamp: number;
   fadedRating: Rating;
   solidRating: Rating;
   swell: SwellForecast;
