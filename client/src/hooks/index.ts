@@ -22,7 +22,7 @@ export function usePost<Body = PostBody, Response = {}>(
         const response = await axios.post<
           Body,
           Promise<AxiosResponse<Response>>
-        >(url, { body }, { cancelToken: source.token });
+        >(url, body, { cancelToken: source.token });
 
         setData(response.data);
         setLoading(false);
