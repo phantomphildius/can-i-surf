@@ -1,6 +1,5 @@
 export interface Recommendation {
-  recommendationTime: string;
-  recommendationWeekDay: string;
+  recommendationTime: number;
   recommendationRating: number;
   id: number;
   recommendationLocationName: string;

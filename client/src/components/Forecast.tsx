@@ -3,11 +3,17 @@ import React from 'react';
 import { usePost } from '../hooks';
 import { Forecast as IForecast, Spot } from '../data';
 
-const Forecast: React.FC<Spot> = ({ spotId, spotName }) => {
+interface Props {
+  spot: Spot;
+  time: number;
+}
+
+const Forecast: React.FC<Props> = ({ spot, time }) => {
+  const { spotId, spotName } = spot;
   const { data: forecast, loading } = usePost<
-    { spotId: number; time: string },
+    { spotId: number; time: number },
     IForecast[]
-  >('/magic_seaweed/forecasts', { spotId: spotId, time: 'time' });
+  >('/magic_seaweed/forecasts', { spotId: spotId, time });
 
   return (
     <section>

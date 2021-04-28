@@ -8,9 +8,11 @@ import { Spot } from './data';
 const App: React.FC = () => {
   const [stepName, setStepName] = useState('intro');
   const [recommendedSpot, setRecommendedSpot] = useState<Spot | null>(null);
+  const [recommendedTime, setRecommendedTime] = useState<number>(0);
 
-  const recommendationHandler = (spot: Spot) => {
+  const recommendationHandler = (spot: Spot, spotTime: number) => {
     setRecommendedSpot(spot);
+    setRecommendedTime(spotTime);
     setStepName('forecast');
   };
 
@@ -19,7 +21,7 @@ const App: React.FC = () => {
       return <Recommendations recommendationHandler={recommendationHandler} />;
     } else if (stepName === 'forecast' && recommendedSpot) {
       // make it so this isn't necessary
-      return <Forecast {...recommendedSpot} />;
+      return <Forecast spot={recommendedSpot} time={recommendedTime} />;
     } else {
       return <Intro clickHandler={() => setStepName('recommendation')} />;
     }

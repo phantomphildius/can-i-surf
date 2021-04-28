@@ -6,7 +6,7 @@ import styles from '../styles';
 import { Recommendation as IRecommendation, Spot } from '../data';
 
 const Recommendations: React.FC<{
-  recommendationHandler: (spot: Spot) => void;
+  recommendationHandler: (spot: Spot, spotTime: number) => void;
 }> = ({ recommendationHandler }) => {
   const Loader: React.FC = () => <h2>Finding out...</h2>;
 
