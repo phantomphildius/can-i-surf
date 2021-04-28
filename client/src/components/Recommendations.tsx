@@ -1,40 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import axios, { AxiosResponse } from 'axios';
-
-interface Recommendation {
-  recommendationTime: Date;
-  recommendationRating: number;
-  id: number;
-  recommendationLocationName: string;
-}
+import React from 'react';
+import { Recommendation } from '../data';
+import { useRecommendation } from '../hooks/recommendations';
 
 const Recommendations: React.FC = () => {
-  const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    try {
-      setLoading(true);
-      const createRecommendation = async () =>
-        await axios.post<
-          { location: string },
-          Promise<AxiosResponse<Recommendation[]>>
-        >('/recommendations/spot', { location: 'rhodeIsland' });
-
-      createRecommendation()
-        .then((res) => setRecommendations(res.data))
-        .catch((err) => {
-          throw new Error(err);
-        });
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
   const styles = {
-    flex: { display: 'flex' },
+    flex: { display: 'flex', flexDirection: 'column' },
     border: { border: '1px solid black' },
   } as const;
 
@@ -52,6 +22,8 @@ const Recommendations: React.FC = () => {
   );
 
   const Loader: React.FC = () => <div>Loading...</div>;
+
+  const { data: recommendations, loading } = useRecommendation('rhodeIsland');
 
   if (loading && !recommendations.length) {
     return <Loader />;
