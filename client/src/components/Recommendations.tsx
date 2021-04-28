@@ -1,39 +1,36 @@
 import React from 'react';
-import { Recommendation } from '../data';
-import { useRecommendation } from '../hooks/recommendations';
 
-const Recommendations: React.FC = () => {
-  const styles = {
-    flex: { display: 'flex', flexDirection: 'column' },
-    border: { border: '1px solid black' },
-  } as const;
+import Recommendation from './Recommendation';
+import { usePost } from '../hooks';
+import styles from '../styles';
+import { Recommendation as IRecommendation, Spot } from '../data';
 
-  const Recommendation: React.FC<Recommendation> = ({
-    recommendationRating,
-    recommendationTime,
-    recommendationLocationName,
-  }) => (
-    <div style={styles.border}>
-      <h3>{recommendationLocationName}</h3>
-      <p>
-        Will be a {recommendationRating}/5 stars at {recommendationTime}
-      </p>
-    </div>
-  );
+const Recommendations: React.FC<{
+  recommendationHandler: (spot: Spot) => void;
+}> = ({ recommendationHandler }) => {
+  const Loader: React.FC = () => <h2>Finding out...</h2>;
 
-  const Loader: React.FC = () => <div>Loading...</div>;
+  const { data: recommendations, loading } = usePost<
+    { location: string },
+    IRecommendation[]
+  >('/recommendations/spot', { location: 'rhodeIsland' });
 
-  const { data: recommendations, loading } = useRecommendation('rhodeIsland');
-
-  if (loading && !recommendations.length) {
+  if (loading && !recommendations) {
     return <Loader />;
   }
 
   return (
     <section>
+      <h2>Best bets</h2>
       <div style={styles.flex}>
-        {recommendations.length ? (
-          recommendations.map((rec) => <Recommendation key={rec.id} {...rec} />)
+        {recommendations ? (
+          recommendations.map((rec) => (
+            <Recommendation
+              key={rec.id}
+              selectionHandler={recommendationHandler}
+              {...rec}
+            />
+          ))
         ) : (
           <h3>Guess not! Bummer dude</h3>
         )}

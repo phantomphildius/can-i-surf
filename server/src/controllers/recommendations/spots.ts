@@ -1,7 +1,8 @@
 import { Request, Response } from 'express';
 import { getBestBetLocations } from '../../models/recommendation';
 import {
-  unixTimeToDate,
+  unixTimeToWeekDay,
+  unixTimeToTime,
   getForecastLocationNameFromId,
 } from '../../models/forecast';
 
@@ -15,9 +16,11 @@ export const createSpotRecommendation = async (
   );
   const recommendation = bestBets.map(
     ({ localTimestamp, id, solidRating }) => ({
-      recommendationTime: unixTimeToDate(localTimestamp),
+      recommendationWeekDay: unixTimeToWeekDay(localTimestamp),
+      recommendationTime: unixTimeToTime(localTimestamp),
       recommendationLocationName: getForecastLocationNameFromId(id),
       recommendationRating: solidRating,
+      id,
     })
   );
 

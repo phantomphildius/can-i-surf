@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { Forecast } from '../types/magic-seaweed';
 import { spotMap } from './magic-seaweed/spots';
 
@@ -9,8 +10,10 @@ export const getForecastLocationNameFromId = (spotId: string): string => {
   return correctRegionalMap?.[spotId] ?? 'Surf Spot';
 };
 
-export const unixTimeToDate = (unixTimeStamp: number): Date =>
-  new Date(unixTimeStamp * 1000);
+export const unixTimeToWeekDay = (unixTimeStamp: number): string =>
+  dayjs(unixTimeStamp * 1000).format('ddd');
+export const unixTimeToTime = (unixTimeStamp: number): string =>
+  dayjs(unixTimeStamp * 1000).format('hh:mm a');
 
 export const sortForecasts = (forecastA: Forecast, forecastB: Forecast) =>
   forecastA.solidRating - forecastB.solidRating ||

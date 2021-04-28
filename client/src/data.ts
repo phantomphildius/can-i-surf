@@ -1,5 +1,6 @@
 export interface Recommendation {
-  recommendationTime: Date;
+  recommendationTime: string;
+  recommendationWeekDay: string;
   recommendationRating: number;
   id: number;
   recommendationLocationName: string;
@@ -7,11 +8,16 @@ export interface Recommendation {
 
 export interface ApiResponse<T> {
   loading: boolean;
-  data: T;
+  data: T | undefined;
   errors: null | {};
 }
 
 type Rating = 1 | 2 | 3 | 4 | 5;
+
+export interface Spot {
+  spotId: number;
+  spotName: string;
+}
 
 interface SwellForecast {
   components: {

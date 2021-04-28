@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 import { getRemoteForecast } from '../../models/magic-seaweed/api';
 
-export const getForecasts = async (request: Request, response: Response) => {
-  const spotId = parseInt(request.params.spot_id) ?? 1;
+export const createForecasts = async (request: Request, response: Response) => {
+  const { spotId } = request.body.body; // wtf
   const remote = await getRemoteForecast(spotId);
 
   return response.json(remote);

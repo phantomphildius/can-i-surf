@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import { getForecasts } from '../../controllers/magic-seaweed/forecasts';
+import { createForecasts } from '../../controllers/magic-seaweed/forecasts';
 
 const router = Router();
 
-router.get('/forecasts/:spot_id', getForecasts);
+router.post('/forecasts', createForecasts);
 
 export default router;

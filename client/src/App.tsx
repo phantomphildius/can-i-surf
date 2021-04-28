@@ -1,25 +1,36 @@
 import React, { useState } from 'react';
-import './App.css';
 
 import Intro from './components/Intro';
 import Recommendations from './components/Recommendations';
+import Forecast from './components/Forecast';
+import { Spot } from './data';
 
 const App: React.FC = () => {
-  const [engaged, setEngaged] = useState(false);
-  const advancePastIntro = () => setEngaged(!engaged);
+  const [stepName, setStepName] = useState('intro');
+  const [recommendedSpot, setRecommendedSpot] = useState<Spot | null>(null);
+
+  const recommendationHandler = (spot: Spot) => {
+    setRecommendedSpot(spot);
+    setStepName('forecast');
+  };
+
+  const spotRecommendationPhaseFactory = (stepName: string) => {
+    if (stepName === 'recommendation') {
+      return <Recommendations recommendationHandler={recommendationHandler} />;
+    } else if (stepName === 'forecast' && recommendedSpot) {
+      // make it so this isn't necessary
+      return <Forecast {...recommendedSpot} />;
+    } else {
+      return <Intro clickHandler={() => setStepName('recommendation')} />;
+    }
+  };
 
   return (
     <div>
       <header>
-        <h1>{engaged ? "Let's find out!" : 'Can i surf today?'}</h1>
+        <h1>Let's find out!</h1>
       </header>
-      <main>
-        {engaged ? (
-          <Recommendations />
-        ) : (
-          <Intro clickHandler={advancePastIntro} />
-        )}
-      </main>
+      <main>{spotRecommendationPhaseFactory(stepName)}</main>
     </div>
   );
 };
