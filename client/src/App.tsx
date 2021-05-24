@@ -7,6 +7,7 @@ import { Spot } from './data';
 
 const App: React.FC = () => {
   const [stepName, setStepName] = useState('intro');
+  const [recommendationRegion, setRecommendationRegion] = useState<string>('');
   const [recommendedSpot, setRecommendedSpot] = useState<Spot | null>(null);
   const [recommendedTime, setRecommendedTime] = useState<number>(0);
 
@@ -15,15 +16,24 @@ const App: React.FC = () => {
     setRecommendedTime(spotTime);
     setStepName('forecast');
   };
+  const introHandler = (location: string) => {
+    setRecommendationRegion(location);
+    setStepName('recommendation');
+  };
 
   const spotRecommendationPhaseFactory = (stepName: string) => {
-    if (stepName === 'recommendation') {
-      return <Recommendations recommendationHandler={recommendationHandler} />;
+    if (stepName === 'recommendation' && recommendationRegion) {
+      return (
+        <Recommendations
+          recommendationHandler={recommendationHandler}
+          recommendationRegion={recommendationRegion}
+        />
+      );
     } else if (stepName === 'forecast' && recommendedSpot) {
-      // make it so this isn't necessary
+      // make it so this isn't necessary ^ and think about a provider maybe or react-router
       return <Forecast spot={recommendedSpot} time={recommendedTime} />;
     } else {
-      return <Intro clickHandler={() => setStepName('recommendation')} />;
+      return <Intro clickHandler={introHandler} />;
     }
   };
 

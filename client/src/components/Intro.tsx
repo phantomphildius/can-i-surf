@@ -1,8 +1,12 @@
 import React from 'react';
 
-const Intro: React.FC<{ clickHandler: () => void }> = ({ clickHandler }) => (
+const Intro: React.FC<{ clickHandler: (location: string) => void }> = ({
+  clickHandler,
+}) => (
   <section>
-    <button onClick={clickHandler}>Start</button>
+    <h2>Choose a region to start</h2>
+    <button onClick={() => clickHandler('Rhode Island')}>Rhode Island</button>
+    <button onClick={() => clickHandler('Hamptons')}>Hamptons</button>
   </section>
 );
 
