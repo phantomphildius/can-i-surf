@@ -1,6 +1,13 @@
 import axios from 'axios';
 import { Forecast } from '../../types/magic-seaweed';
 
+interface MagicSeaweedApiError {
+  error_response: {
+    code: number;
+    error_msg: string;
+  };
+}
+
 const baseURL = `https://magicseaweed.com/api/${process.env.magic_seaweed_api_key}`;
 const units = 'us';
 const fields =
@@ -10,12 +17,25 @@ const apiInstance = axios.create({ baseURL });
 
 export const getRemoteForecast = async (
   spotId: string
-): Promise<Forecast[]> => {
+): Promise<Forecast[] | MagicSeaweedApiError> => {
   const params = { spot_id: spotId, ...baseParams };
-  const response = await apiInstance.get<Omit<Forecast, 'id'>[]>('/forecast', {
-    params,
-  });
+  try {
+    const response = await apiInstance.get<
+      Omit<Forecast, 'id'>[] | MagicSeaweedApiError
+    >('/forecast', {
+      params,
+    });
 
-  // needs to be some sort of error handling
-  return response.data.map((forecast) => ({ id: spotId, ...forecast }));
+    if (response.status !== 200) {
+      throw 'Something is exceptionally wrong';
+    }
+
+    if (Array.isArray(response.data)) {
+      return response.data.map((forecast) => ({ id: spotId, ...forecast }));
+    } else {
+      return response.data;
+    }
+  } catch (err) {
+    return err;
+  }
 };
