@@ -1,12 +1,26 @@
 import { Request, Response } from 'express';
 import { getBestBetLocations } from '../../models/recommendation';
 import { getForecastLocationNameFromId } from '../../models/forecast';
+import { Forecast } from '../../types/magic-seaweed';
+import errorTypes, { ErrorCode } from '../../types/errors';
 
 export const createSpotRecommendation = async (
   request: Request,
   response: Response
 ) => {
   const bestBets = await getBestBetLocations(request.body.location, 3);
+
+  if (bestBets === undefined) {
+    return onError('exceptional', response);
+  } else if (!Array.isArray(bestBets) && !!bestBets?.error_response) {
+    return onError('api', response);
+  } else {
+    // @ts-ignore
+    onSuccess(bestBets, response);
+  }
+};
+
+const onSuccess = (bestBets: Forecast[], response: Response) => {
   const recommendation = bestBets.map(
     ({ localTimestamp, id, solidRating }) => ({
       recommendationTime: localTimestamp,
@@ -17,4 +31,9 @@ export const createSpotRecommendation = async (
   );
 
   return response.status(201).json(recommendation);
+};
+
+const onError = (type: ErrorCode, response: Response) => {
+  const { [type]: error } = errorTypes;
+  return response.status(error.code).json(error);
 };

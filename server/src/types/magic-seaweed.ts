@@ -16,3 +16,10 @@ export interface Forecast {
   solidRating: Rating;
   swell: SwellForecast;
 }
+
+export interface MagicSeaweedApiError {
+  error_response: {
+    code: number;
+    error_msg: string;
+  };
+}

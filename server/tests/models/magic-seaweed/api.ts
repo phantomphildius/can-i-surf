@@ -50,7 +50,8 @@ describe('Api', () => {
 
       describe('when the api key is invalid', function () {
         before(() => {
-          sinon.stub(process.env, 'magic_seaweed_api_key').value('fraudster');
+          const fakeEnv = sinon.stub();
+          sinon.stub(process.env, 'magic_seaweed_api_key').callsFake(fakeEnv);
         });
 
         it('returns the error', async function () {

@@ -1,12 +1,5 @@
 import axios from 'axios';
-import { Forecast } from '../../types/magic-seaweed';
-
-interface MagicSeaweedApiError {
-  error_response: {
-    code: number;
-    error_msg: string;
-  };
-}
+import { Forecast, MagicSeaweedApiError } from '../../types/magic-seaweed';
 
 const baseURL = `https://magicseaweed.com/api/${process.env.magic_seaweed_api_key}`;
 const units = 'us';
