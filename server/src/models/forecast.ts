@@ -1,5 +1,5 @@
 import { Forecast, SwellForecast } from '../types/magic-seaweed';
-import { spotMap } from './magic-seaweed/spots';
+import spotMap from './magic-seaweed/spots';
 
 export const getForecastLocationNameFromId = (spotId: string): string => {
   const regionalMaps = Object.values(spotMap);

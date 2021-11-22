@@ -1,6 +1,13 @@
 import axios from 'axios';
 import { Forecast, MagicSeaweedApiError } from '../../types/magic-seaweed';
 
+const exceptionalError: MagicSeaweedApiError = {
+  error_response: {
+    code: 500,
+    error_msg: 'Something is exceptionally wrong',
+  },
+};
+
 const baseURL = `https://magicseaweed.com/api/${process.env.magic_seaweed_api_key}`;
 const units = 'us';
 const fields =
@@ -20,7 +27,7 @@ export const getRemoteForecast = async (
     });
 
     if (response.status !== 200) {
-      throw 'Something is exceptionally wrong';
+      return exceptionalError;
     }
 
     if (Array.isArray(response.data)) {
@@ -28,7 +35,7 @@ export const getRemoteForecast = async (
     } else {
       return response.data;
     }
-  } catch (err) {
-    return err;
+  } catch (_err) {
+    return exceptionalError;
   }
 };

@@ -1,4 +1,4 @@
-import { spotMap } from './magic-seaweed/spots';
+import spotMap from './magic-seaweed/spots';
 import { getRemoteForecast } from './magic-seaweed/api';
 import { sortForecasts } from './forecast';
 import { Forecast, MagicSeaweedApiError } from '../types/magic-seaweed';
@@ -32,7 +32,7 @@ export const getBestBetLocations = async (
   size: number
 ): Promise<Forecast[] | MagicSeaweedApiError | undefined> => {
   const numberOfRecommendations = size || 3;
-  const locationForecasts = await buildForecastRequestForLocation(location);
+  let locationForecasts = await buildForecastRequestForLocation(location);
   const status = getResponseStatus(locationForecasts);
 
   if (status === ApiResponseStates.ERROR) {

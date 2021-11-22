@@ -1,4 +1,4 @@
-export const spotMap: Record<string, Record<string, string>> = {
+const spotMap: Record<string, Record<string, string>> = {
   'Rhode Island': {
     '846': 'Second Beach',
     '907': 'First Beach',
@@ -30,3 +30,5 @@ export const spotMap: Record<string, Record<string, string>> = {
     '4876': 'West Dune Road',
   },
 };
+
+export default spotMap;
