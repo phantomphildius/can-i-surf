@@ -1,4 +1,4 @@
-import { MagicSeaweedApiError } from '.';
+import { MagicSeaweedApiError } from '../types/magic-seaweed';
 
 export const exceptionalError: MagicSeaweedApiError = {
   error_response: {
