@@ -3,7 +3,7 @@ import { when } from 'jest-when';
 import { getBestBetLocations } from './recommendation';
 import { getRemoteForecast } from './magic-seaweed/api';
 import { Rating } from '../types/magic-seaweed';
-import { ruggles, firstBeach, matunuck } from '../testing/fixtures';
+import { ruggles, firstBeach, matunuck } from '../testing';
 
 jest.mock('./magic-seaweed/api');
 jest.mock('./magic-seaweed/spots', () => ({

@@ -1,4 +1,4 @@
-export type ErrorCode = 'exceptional' | 'api' | 'parameter';
+type ErrorCode = 'exceptional' | 'api' | 'parameter';
 
 export interface ApiError {
   code: number;

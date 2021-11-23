@@ -2,7 +2,7 @@ import mockAxios from 'jest-mock-axios';
 
 import { getRemoteForecast } from './api';
 import { Forecast, MagicSeaweedApiError } from '../../types/magic-seaweed';
-import { ruggles } from '../../testing/fixtures';
+import { ruggles } from '../../testing';
 
 const baseRequestParams = {
   fields:

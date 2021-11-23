@@ -2,8 +2,15 @@ import { Request, Response } from 'express';
 
 import { getBestBetLocations } from '../../models/recommendation';
 import { getForecastLocationNameFromId } from '../../models/forecast';
-import { Forecast, MagicSeaweedApiError } from '../../types/magic-seaweed';
-import errorTypes, { ApiError, ErrorCode } from '../../types/errors';
+import { Forecast, Rating } from '../../types/magic-seaweed';
+import { parameterErrorHandler, responseHandler } from '../../utils/api';
+
+interface ResponseShape {
+  recommendationTime: number;
+  id: string;
+  recommendationLocationName: string;
+  recommendationRating: Rating;
+}
 
 export const createSpotRecommendation = async (
   request: Request<{}, {}, { location: string }>,
@@ -14,43 +21,20 @@ export const createSpotRecommendation = async (
   if (location) {
     const bestBets = await getBestBetLocations(location, 3);
 
-    if (!Array.isArray(bestBets) && !!bestBets?.error_response) {
-      return onError(response, bestBets);
-    } else {
-      return onSuccess(bestBets as Forecast[], response);
-    }
+    return responseHandler<Forecast, ResponseShape>(
+      bestBets,
+      response,
+      onSuccess
+    );
   } else {
-    return onError(response);
+    return parameterErrorHandler(response);
   }
 };
 
-const onSuccess = (bestBets: Forecast[], response: Response) => {
-  const recommendation = bestBets.map(
-    ({ localTimestamp, id, solidRating }) => ({
-      recommendationTime: localTimestamp,
-      recommendationLocationName: getForecastLocationNameFromId(id),
-      recommendationRating: solidRating,
-      id,
-    })
-  );
-
-  return response.status(201).json(recommendation);
-};
-
-const onError = (response: Response, errorResponse?: MagicSeaweedApiError) => {
-  const error =
-    (errorResponse && buildErrorMessage(errorResponse)) || errorTypes.parameter;
-  return response.status(error.code).json(error);
-};
-
-const buildErrorMessage = (error: MagicSeaweedApiError): ApiError => {
-  const {
-    error_response: { code },
-  } = error;
-
-  if (code === 501 || code === 116) {
-    return errorTypes.api;
-  } else {
-    return errorTypes.exceptional;
-  }
-};
+const onSuccess = (bestBets: Forecast[]): ResponseShape[] =>
+  bestBets.map(({ localTimestamp, id, solidRating }) => ({
+    recommendationTime: localTimestamp,
+    recommendationLocationName: getForecastLocationNameFromId(id),
+    recommendationRating: solidRating,
+    id,
+  }));
