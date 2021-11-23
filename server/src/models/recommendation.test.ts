@@ -117,7 +117,12 @@ describe('Recommendation', () => {
 
         const response = await getBestBetLocations('Rhode Island', 3);
 
-        expect(response).toBeUndefined();
+        expect(response).toEqual({
+          error_response: {
+            code: 500,
+            error_msg: 'Something is exceptionally wrong',
+          },
+        });
       });
     });
   });

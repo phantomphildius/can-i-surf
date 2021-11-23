@@ -2,27 +2,25 @@ import { Request, Response } from 'express';
 
 import { getBestBetLocations } from '../../models/recommendation';
 import { getForecastLocationNameFromId } from '../../models/forecast';
-import { Forecast } from '../../types/magic-seaweed';
-import errorTypes, { ErrorCode } from '../../types/errors';
+import { Forecast, MagicSeaweedApiError } from '../../types/magic-seaweed';
+import errorTypes, { ApiError, ErrorCode } from '../../types/errors';
 
 export const createSpotRecommendation = async (
-  request: Request,
+  request: Request<{}, {}, { location: string }>,
   response: Response
 ) => {
   const { location } = request.body;
-  if (location) {
-    const bestBets = await getBestBetLocations(request.body.location, 3);
 
-    if (bestBets === undefined) {
-      return onError('exceptional', response);
-    } else if (!Array.isArray(bestBets) && !!bestBets?.error_response) {
-      return onError('api', response);
+  if (location) {
+    const bestBets = await getBestBetLocations(location, 3);
+
+    if (!Array.isArray(bestBets) && !!bestBets?.error_response) {
+      return onError(response, bestBets);
     } else {
-      // @ts-ignore
-      return onSuccess(bestBets, response);
+      return onSuccess(bestBets as Forecast[], response);
     }
   } else {
-    return onError('parameter', response);
+    return onError(response);
   }
 };
 
@@ -39,7 +37,20 @@ const onSuccess = (bestBets: Forecast[], response: Response) => {
   return response.status(201).json(recommendation);
 };
 
-const onError = (type: ErrorCode, response: Response) => {
-  const { [type]: error } = errorTypes;
+const onError = (response: Response, errorResponse?: MagicSeaweedApiError) => {
+  const error =
+    (errorResponse && buildErrorMessage(errorResponse)) || errorTypes.parameter;
   return response.status(error.code).json(error);
+};
+
+const buildErrorMessage = (error: MagicSeaweedApiError): ApiError => {
+  const {
+    error_response: { code },
+  } = error;
+
+  if (code === 501 || code === 116) {
+    return errorTypes.api;
+  } else {
+    return errorTypes.exceptional;
+  }
 };

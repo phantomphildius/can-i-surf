@@ -1,12 +1,7 @@
 import axios from 'axios';
-import { Forecast, MagicSeaweedApiError } from '../../types/magic-seaweed';
 
-const exceptionalError: MagicSeaweedApiError = {
-  error_response: {
-    code: 500,
-    error_msg: 'Something is exceptionally wrong',
-  },
-};
+import { exceptionalError } from '../../types/magic-seaweed/errors';
+import { Forecast, MagicSeaweedApiError } from '../../types/magic-seaweed';
 
 const baseURL = `https://magicseaweed.com/api/${process.env.magic_seaweed_api_key}`;
 const units = 'us';
