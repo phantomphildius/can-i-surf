@@ -1,21 +1,16 @@
-import { expect } from 'chai';
-
-import {
-  getForecastLocationNameFromId,
-  sortForecasts,
-} from '../../src/models/forecast';
-import { Rating } from '../../src/types/magic-seaweed';
+import { getForecastLocationNameFromId, sortForecasts } from './forecast';
+import { Rating } from '../types/magic-seaweed';
 
 describe('Forecast', () => {
   describe('#getForecastLocationNameFromID', () => {
     it('returns the forecast location name given an id', () => {
       const locationName = getForecastLocationNameFromId('574');
-      expect(locationName).to.eq('Ruggles');
+      expect(locationName).toBe('Ruggles');
     });
 
     it('returns the default forecast location name given a bogus id', () => {
       const locationName = getForecastLocationNameFromId('test');
-      expect(locationName).to.eq('Surf Spot');
+      expect(locationName).toBe('Surf Spot');
     });
   });
 
@@ -38,14 +33,8 @@ describe('Forecast', () => {
       const sortedForecasts = sortForecasts(forecastA, forecastB);
       const reverseSortedForecasts = sortForecasts(forecastB, forecastA);
 
-      expect(sortedForecasts).to.eq(
-        2,
-        'because forecastB has a higher solid rating'
-      );
-      expect(reverseSortedForecasts).to.eq(
-        -2,
-        'because forecastB has a higher solid rating'
-      );
+      expect(sortedForecasts).toBe(2);
+      expect(reverseSortedForecasts).toBe(-2);
     });
 
     it('sorts forecasts by their faded rating second', () => {
@@ -66,14 +55,8 @@ describe('Forecast', () => {
       const sortedForecasts = sortForecasts(forecastA, forecastB);
       const reverseSortedForecasts = sortForecasts(forecastB, forecastA);
 
-      expect(sortedForecasts).to.eq(
-        -1,
-        'because forecastA has a higher faded rating'
-      );
-      expect(reverseSortedForecasts).to.eq(
-        1,
-        'because forecastA has a higher faded rating'
-      );
+      expect(sortedForecasts).toBe(-1);
+      expect(reverseSortedForecasts).toBe(1);
     });
 
     it('sorts forecasts by their swell magnitude last', () => {
@@ -94,14 +77,8 @@ describe('Forecast', () => {
       const sortedForecasts = sortForecasts(forecastA, forecastB);
       const reverseSortedForecasts = sortForecasts(forecastB, forecastA);
 
-      expect(sortedForecasts).to.eq(
-        -1,
-        'because forecastA has a higher swell magnitude'
-      );
-      expect(reverseSortedForecasts).to.eq(
-        1,
-        'because forecastA has a higher swell magnitude'
-      );
+      expect(sortedForecasts).toBe(-1);
+      expect(reverseSortedForecasts).toBe(1);
     });
 
     it('does not sort if ratings are the same', () => {
@@ -121,10 +98,7 @@ describe('Forecast', () => {
       };
       const sortedForecasts = sortForecasts(forecastA, forecastB);
 
-      expect(sortedForecasts).to.eq(
-        0,
-        'because forecastA has a higher swell magnitude'
-      );
+      expect(sortedForecasts).toBe(0);
     });
   });
 });
