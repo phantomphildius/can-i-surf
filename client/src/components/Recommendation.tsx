@@ -1,11 +1,12 @@
 import React from 'react';
 import dayjs from 'dayjs';
 
-import { Recommendation as IRecommendation, Spot } from '../data';
+import { Recommendation as IRecommendation } from '../data';
 import styles from '../styles';
+import { Link } from 'react-router-dom';
 
 interface Props extends IRecommendation {
-  selectionHandler: (spot: Spot, spotTime: number) => void;
+  id: number;
 }
 
 export const unixTimeToDisplayTime = (unixTimeStamp: number): string => {
@@ -17,7 +18,6 @@ const Recommendation: React.FC<Props> = ({
   recommendationRating,
   recommendationTime,
   recommendationLocationName,
-  selectionHandler,
   id,
 }) => (
   <div style={styles.border}>
@@ -26,16 +26,7 @@ const Recommendation: React.FC<Props> = ({
       Will be a {recommendationRating}/5 stars on{' '}
       {unixTimeToDisplayTime(recommendationTime)}
     </p>
-    <button
-      onClick={() =>
-        selectionHandler(
-          { spotId: id, spotName: recommendationLocationName },
-          recommendationTime
-        )
-      }
-    >
-      See more
-    </button>
+    <Link to={`${id}`}>See more</Link>
   </div>
 );
 

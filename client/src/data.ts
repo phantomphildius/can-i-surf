@@ -8,15 +8,10 @@ export interface Recommendation {
 export interface ApiResponse<T> {
   loading: boolean;
   data: T | undefined;
-  errors: null | {};
+  errors: ApiError | {};
 }
 
 type Rating = 1 | 2 | 3 | 4 | 5;
-
-export interface Spot {
-  spotId: number;
-  spotName: string;
-}
 
 interface SwellForecast {
   components: {
@@ -32,4 +27,9 @@ export interface Forecast {
   fadedRating: Rating;
   solidRating: Rating;
   swell: SwellForecast;
+}
+
+export interface ApiError {
+  status: number;
+  details: string;
 }

@@ -1,23 +1,19 @@
 import React from 'react';
+import { useParams } from 'react-router';
 
 import { usePost } from '../hooks';
-import { Forecast as IForecast, Spot } from '../data';
+import { Forecast as IForecast } from '../data';
 
-interface Props {
-  spot: Spot;
-  time: number;
-}
-
-const Forecast: React.FC<Props> = ({ spot, time }) => {
-  const { spotId, spotName } = spot;
-  const { data: forecast, loading } = usePost<
-    { spotId: number; time: number },
-    IForecast[]
-  >('/magic_seaweed/forecasts', { spotId: spotId, time });
+const Forecast: React.FC = () => {
+  const { spotId } = useParams();
+  const { data: forecast, loading } = usePost<{ spotId: string }, IForecast[]>(
+    '/magic_seaweed/forecasts',
+    // @ts-ignore
+    { spotId }
+  );
 
   return (
     <section>
-      <h2>{spotName}</h2>
       {loading ? (
         <div>Loading...</div>
       ) : (

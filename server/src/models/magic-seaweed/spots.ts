@@ -1,5 +1,5 @@
 const spotMap: Record<string, Record<string, string>> = {
-  'Rhode Island': {
+  rhodeIsland: {
     '846': 'Second Beach',
     '907': 'First Beach',
     '377': 'Matunuck',
@@ -12,7 +12,7 @@ const spotMap: Record<string, Record<string, string>> = {
     '7911': 'Scarborough',
     '4058': 'Weekapaug',
   },
-  Hamptons: {
+  hamptons: {
     '2160': 'Atlantic Terrace',
     '4875': 'Coopers Beach',
     '4224': 'Cupsogue',
