@@ -3,7 +3,10 @@ import { Request, Response } from 'express';
 import { getBestBetLocations } from '../../models/recommendation';
 import { getForecastLocationNameFromId } from '../../models/forecast';
 import { Forecast, Rating } from '../../types/magic-seaweed';
-import { parameterErrorHandler, responseHandler } from '../../utils/api';
+import {
+  parameterErrorHandler,
+  responseHandler,
+} from '../../utils/api/handlers';
 
 interface ResponseShape {
   recommendationTime: number;
