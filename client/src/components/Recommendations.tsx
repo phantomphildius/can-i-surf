@@ -26,16 +26,20 @@ const Recommendations: React.FC = () => {
 
   return (
     <section>
+      <h2>Best bets are</h2>
       {recommendations && !errors ? (
-        <>
-          <h2>Best bets for {location}</h2>
-          <div style={styles.flex}>
-            {recommendations.map((rec) => (
-              <Recommendation key={rec.id} {...rec} />
-            ))}
-          </div>
-          <Outlet />
-        </>
+        <div style={styles.flex.default}>
+          <section>
+            <div style={styles.flex.column}>
+              {recommendations.map((rec) => (
+                <Recommendation key={rec.id} {...rec} />
+              ))}
+            </div>
+          </section>
+          <section>
+            <Outlet />
+          </section>
+        </div>
       ) : (
         <>
           <h3>Guess not! Bummer dude</h3>
