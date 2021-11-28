@@ -5,7 +5,7 @@ import { Recommendation as IRecommendation } from '../data';
 import styles from '../styles';
 import { Link } from 'react-router-dom';
 
-interface Props extends IRecommendation {
+export interface Props extends IRecommendation {
   id: number;
 }
 
@@ -20,7 +20,10 @@ const Recommendation: React.FC<Props> = ({
   recommendationLocationName,
   id,
 }) => (
-  <div style={styles.border}>
+  <div
+    style={styles.border}
+    data-testid={`recommendation-${recommendationLocationName}`}
+  >
     <h3>{recommendationLocationName}</h3>
     <p>
       Will be a {recommendationRating}/5 stars on{' '}

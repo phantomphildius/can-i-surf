@@ -1,4 +1,3 @@
-import { ApiError } from '../data';
+import { hasError, hasData } from './api-handlers';
 
-export const hasError = (errors: ApiError | {}) =>
-  Object.keys(errors).length > 0;
+export { hasError, hasData };
