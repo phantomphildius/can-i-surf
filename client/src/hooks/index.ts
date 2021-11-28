@@ -11,7 +11,7 @@ export function usePost<Body = PostBody, Response = {}>(
 ): ApiResponse<Response> {
   const [data, setData] = useState<Response>();
   const [loading, setLoading] = useState(false);
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState();
 
   useEffect(() => {
     const source = axios.CancelToken.source();

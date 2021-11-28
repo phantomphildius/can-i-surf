@@ -2,29 +2,29 @@ import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { when } from 'jest-when';
 
-import Recommendations from './Recommendations';
+import Forecast from './Forecast';
 import { usePost } from '../hooks';
 
 jest.mock('../hooks');
 jest.mock('react-router', () => ({
   ...jest.requireActual('react-router'),
   useParams: () => ({
-    region: 'rhodeIsland',
+    spotId: '73',
   }),
 }));
 
 const subject = () =>
   render(
     <BrowserRouter>
-      <Recommendations />
+      <Forecast />
     </BrowserRouter>
   );
 
-describe('Recommendations', () => {
+describe('Forecast', () => {
   describe('when the component is loading data', () => {
     beforeEach(() => {
       when(usePost)
-        .calledWith('/recommendations/spot', { location: 'rhodeIsland' })
+        .calledWith('/magic_seaweed/forecasts', { spotId: '73' })
         .mockReturnValue({
           loading: true,
           data: undefined,
@@ -35,14 +35,15 @@ describe('Recommendations', () => {
     it('renders the loader', () => {
       subject();
 
-      expect(screen.getByText('Finding out...')).toBeInTheDocument();
+      expect(screen.getByText('Building...')).toBeInTheDocument();
     });
   });
 
   describe('when the component is handed an error', () => {
     beforeEach(() => {
+      when(usePost);
       when(usePost)
-        .calledWith('/recommendations/spot', { location: 'rhodeIsland' })
+        .calledWith('/magic_seaweed/forecasts', { spotId: '73' })
         .mockReturnValue({
           loading: false,
           data: undefined,
@@ -53,7 +54,6 @@ describe('Recommendations', () => {
     it('renders the returned error message', () => {
       subject();
 
-      expect(screen.getByText('Guess not! Bummer dude')).toBeInTheDocument();
       expect(screen.getByText('it went wrong')).toBeInTheDocument();
     });
   });
@@ -61,38 +61,54 @@ describe('Recommendations', () => {
   describe('when the component is handed the response', () => {
     beforeEach(() => {
       when(usePost)
-        .calledWith('/recommendations/spot', { location: 'rhodeIsland' })
+        .calledWith('/magic_seaweed/forecasts', { spotId: '73' })
         .mockReturnValue({
           loading: false,
           data: [
             {
-              recommendationRating: 3,
-              recommendationTime: 1621983600,
-              recommendationLocationName: 'Pipe',
-              id: 1234,
+              id: '73',
+              localTimestamp: 1621983600,
+              solidRating: 3,
+              fadedRating: 3,
+              swell: {
+                components: {
+                  combined: {
+                    height: 5.5,
+                    period: 9,
+                  },
+                },
+              },
             },
             {
-              recommendationRating: 2,
-              recommendationTime: 1621983610,
-              recommendationLocationName: 'Rockies',
-              id: 6789,
+              id: '73',
+              localTimestamp: 1621983601,
+              solidRating: 4,
+              fadedRating: 4,
+              swell: {
+                components: {
+                  combined: {
+                    height: 5.5,
+                    period: 9,
+                  },
+                },
+              },
             },
           ],
           errors: undefined,
         });
     });
 
-    it('renders the returned recommendations', () => {
+    it('renders the returned forecast', () => {
       subject();
 
-      const recommendations = screen.getAllByTestId('recommendation', {
+      const forecasts = screen.getAllByTestId('forecast', {
         exact: false,
       });
 
-      expect(recommendations.length).toBe(2);
+      expect(forecasts.length).toBe(2);
 
-      expect(recommendations[0]).toHaveTextContent('Pipe');
-      expect(recommendations[1]).toHaveTextContent('Rockies');
+      expect(forecasts[0]).toHaveTextContent('3');
+      expect(forecasts[1]).toHaveTextContent('4');
     });
   });
 });

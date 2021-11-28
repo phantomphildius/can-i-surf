@@ -8,7 +8,7 @@ export interface Recommendation {
 export interface ApiResponse<T> {
   loading: boolean;
   data: T | undefined;
-  errors: ApiError | {};
+  errors: ApiError | undefined;
 }
 
 type Rating = 1 | 2 | 3 | 4 | 5;

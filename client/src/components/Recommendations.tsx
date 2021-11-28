@@ -6,7 +6,6 @@ import Recommendation from './Recommendation';
 import { usePost } from '../hooks';
 import styles from '../styles';
 import { Recommendation as IRecommendation } from '../data';
-import { hasError } from '../utils';
 
 const Recommendations: React.FC = () => {
   const Loader: React.FC = () => <h2>Finding out...</h2>;
@@ -21,13 +20,13 @@ const Recommendations: React.FC = () => {
     { location: camelCase(location) }
   );
 
-  if (loading && !(recommendations || hasError(errors))) {
+  if (loading && !(recommendations || errors)) {
     return <Loader />;
   }
 
   return (
     <section>
-      {recommendations && !hasError(errors) ? (
+      {recommendations && !errors ? (
         <>
           <h2>Best bets for {location}</h2>
           <div style={styles.flex}>
@@ -40,8 +39,7 @@ const Recommendations: React.FC = () => {
       ) : (
         <>
           <h3>Guess not! Bummer dude</h3>
-          {/* @ts-ignore */}
-          <p>{Object.keys(errors).length && errors.details}</p>
+          <p>{errors?.details}</p>
         </>
       )}
     </section>
