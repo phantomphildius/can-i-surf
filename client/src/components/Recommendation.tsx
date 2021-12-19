@@ -1,10 +1,16 @@
 import React from 'react';
 import dayjs from 'dayjs';
+import { Link } from 'react-router-dom';
+import {
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
+  Heading,
+  Paragraph,
+} from 'grommet';
 
 import { Recommendation as IRecommendation } from '../data';
-import styles from '../styles';
-import { Link } from 'react-router-dom';
-
 export interface Props extends IRecommendation {
   id: number;
 }
@@ -20,17 +26,23 @@ const Recommendation: React.FC<Props> = ({
   recommendationLocationName,
   id,
 }) => (
-  <div
-    style={styles.border}
+  <Card
+    pad="medium"
     data-testid={`recommendation-${recommendationLocationName}`}
   >
-    <h3>{recommendationLocationName}</h3>
-    <p>
-      Will be a {recommendationRating}/5 stars on{' '}
-      {unixTimeToDisplayTime(recommendationTime)}
-    </p>
-    <Link to={`${id}`}>See more</Link>
-  </div>
+    <CardHeader>
+      <Heading level="3">{recommendationLocationName}</Heading>
+    </CardHeader>
+    <CardBody>
+      <Paragraph>
+        Will be a {recommendationRating}/5 stars on{' '}
+        {unixTimeToDisplayTime(recommendationTime)}
+      </Paragraph>
+    </CardBody>
+    <CardFooter>
+      <Link to={`${id}`}>See more</Link>
+    </CardFooter>
+  </Card>
 );
 
 export default Recommendation;

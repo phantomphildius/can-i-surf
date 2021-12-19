@@ -1,8 +1,14 @@
 import { render, screen } from '@testing-library/react';
+import { BrowserRouter } from 'react-router-dom';
 
 import Header from './Header';
 
-const subject = (region?: string) => render(<Header region={region} />);
+const subject = (region?: string) =>
+  render(
+    <BrowserRouter>
+      <Header region={region} />
+    </BrowserRouter>
+  );
 
 describe('Header', () => {
   describe('with a surf region', () => {
