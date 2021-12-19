@@ -1,11 +1,12 @@
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
+import { Grommet } from 'grommet';
 import { when } from 'jest-when';
 
 import Recommendations from './Recommendations';
 import { usePost } from '../hooks';
 
-jest.mock('../hooks');
+jest.mock('../hooks/usePost');
 jest.mock('react-router', () => ({
   ...jest.requireActual('react-router'),
   useParams: () => ({
@@ -15,9 +16,11 @@ jest.mock('react-router', () => ({
 
 const subject = () =>
   render(
-    <BrowserRouter>
-      <Recommendations />
-    </BrowserRouter>
+    <Grommet plain>
+      <BrowserRouter>
+        <Recommendations />
+      </BrowserRouter>
+    </Grommet>
   );
 
 describe('Recommendations', () => {
