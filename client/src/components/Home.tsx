@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Box, Card, CardBody, Heading, Text } from 'grommet';
+import { Box, Card, CardBody, Heading } from 'grommet';
 
 import Header from './Header';
 import { useBreakpoint } from '../hooks';
@@ -9,10 +9,15 @@ const RegionalLink: React.FC<{ name: string; slug: string }> = ({
   slug,
   name,
 }) => (
-  <Link to={`/spots/${slug}`}>
-    <Card pad="medium">
+  <Link
+    to={`/spots/${slug}`}
+    style={{ textDecoration: 'none', color: 'black' }}
+  >
+    <Card pad={{ horizontal: 'large' }}>
       <CardBody justify="center">
-        <Text alignSelf="center">{name}</Text>
+        <Heading level="3" alignSelf="center">
+          {name}
+        </Heading>
       </CardBody>
     </Card>
   </Link>
