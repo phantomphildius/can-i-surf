@@ -33,7 +33,7 @@ describe('#createSpotRecommendation', () => {
     describe('when the api returns an error', function () {
       beforeEach(() => {
         when(getBestBetLocations)
-          .calledWith('Rhode Island', 3)
+          .calledWith('Rhode Island')
           .mockResolvedValueOnce({
             error_response: {
               code: 501,
@@ -62,7 +62,7 @@ describe('#createSpotRecommendation', () => {
     describe('when something goes wrong', function () {
       beforeEach(() => {
         when(getBestBetLocations)
-          .calledWith('Rhode Island', 3)
+          .calledWith('Rhode Island')
           .mockResolvedValueOnce({
             error_response: {
               code: 500,
@@ -92,7 +92,7 @@ describe('#createSpotRecommendation', () => {
   describe('Success State', () => {
     beforeEach(() => {
       when(getBestBetLocations)
-        .calledWith('Rhode Island', 3)
+        .calledWith('Rhode Island')
         .mockResolvedValueOnce(ruggles);
     });
     it('returns a recommendation collection', async () => {

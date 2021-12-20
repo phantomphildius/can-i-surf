@@ -15,11 +15,10 @@ enum ApiResponseStates {
 const getResponseStatus = (
   apiResponse: Array<Forecast[] | MagicSeaweedApiError>
 ): ApiResponseStates => {
-  if (apiResponse.some(detectError)) {
+  if (apiResponse.some(hasError)) {
     return ApiResponseStates.ERROR;
   } else if (
-    !isArray(apiResponse) ||
-    !apiResponse.length ||
+    !hasData(apiResponse as Forecast[][]) ||
     apiResponse.some((res) => !isArray(res))
   ) {
     return ApiResponseStates.EMPTY;
@@ -30,14 +29,14 @@ const getResponseStatus = (
 
 export const getBestBetLocations = async (
   location: string,
-  size: number
+  size?: number
 ): Promise<Forecast[] | MagicSeaweedApiError> => {
   const numberOfRecommendations = size || 3;
-  let locationForecasts = await buildForecastRequestForLocation(location);
-  const status = getResponseStatus(locationForecasts);
+  const locationForecasts = await buildForecastRequestForLocation(location);
+  const status = getDeepResponseStatus(locationForecasts);
 
   if (status === ApiResponseStates.ERROR) {
-    return locationForecasts.find(detectError) as MagicSeaweedApiError;
+    return locationForecasts.find(hasError) as MagicSeaweedApiError;
   } else if (status === ApiResponseStates.SUCCESS) {
     const recommendations = handleSuccessfulRecommendation(
       locationForecasts as Forecast[][]
@@ -58,8 +57,11 @@ const handleSuccessfulRecommendation = (
   return topLocationForecasts.sort(sortForecasts);
 };
 
-const detectError = (forecast: Forecast[] | MagicSeaweedApiError) =>
+const hasError = (forecast: Forecast[] | MagicSeaweedApiError) =>
   !Array.isArray(forecast) && !!forecast.error_response;
+
+const hasData = (response: Forecast[] | Forecast[][]) =>
+  !!(Array.isArray(response) && response.length);
 
 const buildForecastRequestForLocation = async (
   location: string

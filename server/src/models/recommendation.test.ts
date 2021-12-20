@@ -16,7 +16,7 @@ jest.mock('./magic-seaweed/spots', () => ({
 }));
 
 describe('Recommendation', () => {
-  describe('#getBestBets', () => {
+  describe('#getBestBetLocations', () => {
     beforeEach(() => {
       when(getRemoteForecast)
         .calledWith('574')
@@ -31,7 +31,7 @@ describe('Recommendation', () => {
       jest.restoreAllMocks();
     });
 
-    describe('Given a location and result count', function () {
+    describe('Given a location', function () {
       it('returns the given array of location forecasts', async function () {
         const secondBeach = [
           {
@@ -68,7 +68,7 @@ describe('Recommendation', () => {
           .calledWith('846')
           .mockResolvedValueOnce(secondBeach);
 
-        const response = await getBestBetLocations('Rhode Island', 3);
+        const response = await getBestBetLocations('Rhode Island');
 
         expect(Array.isArray(response)).toBe(true);
         expect(response).toHaveLength(3);
@@ -86,6 +86,90 @@ describe('Recommendation', () => {
         expect(matunuckResponse).toMatchObject({ id: '377' });
       });
     });
+
+    describe('Given a result count', function () {
+      it('returns the exact number of location forecasts', async function () {
+        const secondBeach = [
+          {
+            id: '846',
+            localTimestamp: 2621983600,
+            solidRating: 0 as Rating,
+            fadedRating: 0 as Rating,
+            swell: {
+              components: {
+                combined: {
+                  height: 5.5,
+                  period: 9,
+                },
+              },
+            },
+          },
+          {
+            id: '846',
+            localTimestamp: 2621983601,
+            solidRating: 1 as Rating,
+            fadedRating: 0 as Rating,
+            swell: {
+              components: {
+                combined: {
+                  height: 5.5,
+                  period: 9,
+                },
+              },
+            },
+          },
+        ];
+
+        when(getRemoteForecast)
+          .calledWith('846')
+          .mockResolvedValueOnce(secondBeach);
+
+        const response = await getBestBetLocations('Rhode Island', 4);
+
+        expect(Array.isArray(response)).toBe(true);
+        expect(response).toHaveLength(4);
+      });
+    });
+
+    describe('When there is a remote forecast api error', function () {
+      it('only returns the error', async function () {
+        const secondBeach = {
+          error_response: {
+            code: 501,
+            error_msg: 'Something about incorrect parameters',
+          },
+        };
+        when(getRemoteForecast)
+          .calledWith('846')
+          .mockResolvedValueOnce(secondBeach);
+
+        const response = await getBestBetLocations('Rhode Island');
+
+        expect(response).toEqual({
+          error_response: {
+            code: 501,
+            error_msg: 'Something about incorrect parameters',
+          },
+        });
+      });
+    });
+
+    describe('When there nothing is returned from the api', function () {
+      it('only returns the error', async function () {
+        // @ts-ignore
+        when(getRemoteForecast).calledWith('846').mockResolvedValueOnce({});
+
+        const response = await getBestBetLocations('Rhode Island');
+
+        expect(response).toEqual({
+          error_response: {
+            code: 500,
+            error_msg: 'Something is exceptionally wrong',
+          },
+        });
+      });
+    });
+  });
 
     describe('When there is a remote forecast api error', function () {
       it('only returns the error', async function () {

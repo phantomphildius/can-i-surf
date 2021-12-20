@@ -22,7 +22,7 @@ export const createSpotRecommendation = async (
   const { location } = request.body;
 
   if (location) {
-    const bestBets = await getBestBetLocations(location, 3);
+    const bestBets = await getBestBetLocations(location);
 
     return responseHandler<Forecast, ResponseShape>(
       bestBets,
