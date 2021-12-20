@@ -1,6 +1,9 @@
 import { when } from 'jest-when';
 
-import { getBestBetLocations } from './recommendation';
+import {
+  getBestBetLocations,
+  getBestBetWindowsForLocation,
+} from './recommendation';
 import { getRemoteForecast } from './magic-seaweed/api';
 import { Rating } from '../types/magic-seaweed';
 import { ruggles, firstBeach, matunuck } from '../testing';
@@ -171,6 +174,139 @@ describe('Recommendation', () => {
     });
   });
 
+  describe('#getBestBetWindowsForLocation', () => {
+    afterEach(() => {
+      jest.restoreAllMocks();
+    });
+
+    describe('Given a recommended spot', function () {
+      it('returns the given array of time forecasts', async function () {
+        const secondBeach = [
+          {
+            id: '846',
+            localTimestamp: 2621983600,
+            solidRating: 0 as Rating,
+            fadedRating: 0 as Rating,
+            swell: {
+              components: {
+                combined: {
+                  height: 5.5,
+                  period: 9,
+                },
+              },
+            },
+          },
+          {
+            id: '846',
+            localTimestamp: 2621983601,
+            solidRating: 1 as Rating,
+            fadedRating: 0 as Rating,
+            swell: {
+              components: {
+                combined: {
+                  height: 5.5,
+                  period: 9,
+                },
+              },
+            },
+          },
+          {
+            id: '846',
+            localTimestamp: 2621983603,
+            solidRating: 2 as Rating,
+            fadedRating: 1 as Rating,
+            swell: {
+              components: {
+                combined: {
+                  height: 5.5,
+                  period: 9,
+                },
+              },
+            },
+          },
+        ];
+
+        when(getRemoteForecast)
+          .calledWith('846')
+          .mockResolvedValueOnce(secondBeach);
+
+        const response = await getBestBetWindowsForLocation('846');
+
+        expect(Array.isArray(response)).toBe(true);
+        expect(response).toHaveLength(3);
+
+        // @ts-ignore
+        const bestWindow = response[0];
+        expect(bestWindow).toMatchObject({ localTimestamp: 2621983603 });
+
+        // @ts-ignore
+        const secondBestWindow = response[1];
+        expect(secondBestWindow).toMatchObject({ localTimestamp: 2621983601 });
+
+        // @ts-ignore
+        const thirdBestWindow = response[2];
+        expect(thirdBestWindow).toMatchObject({ localTimestamp: 2621983600 });
+      });
+    });
+
+    describe('Given a result count', function () {
+      it('returns the exact number of time windows', async function () {
+        const secondBeach = [
+          {
+            id: '846',
+            localTimestamp: 2621983600,
+            solidRating: 0 as Rating,
+            fadedRating: 0 as Rating,
+            swell: {
+              components: {
+                combined: {
+                  height: 5.5,
+                  period: 9,
+                },
+              },
+            },
+          },
+          {
+            id: '846',
+            localTimestamp: 2621983601,
+            solidRating: 1 as Rating,
+            fadedRating: 0 as Rating,
+            swell: {
+              components: {
+                combined: {
+                  height: 5.5,
+                  period: 9,
+                },
+              },
+            },
+          },
+          {
+            id: '846',
+            localTimestamp: 2621983603,
+            solidRating: 2 as Rating,
+            fadedRating: 1 as Rating,
+            swell: {
+              components: {
+                combined: {
+                  height: 5.5,
+                  period: 9,
+                },
+              },
+            },
+          },
+        ];
+
+        when(getRemoteForecast)
+          .calledWith('846')
+          .mockResolvedValueOnce(secondBeach);
+
+        const response = await getBestBetWindowsForLocation('846', 1);
+
+        expect(Array.isArray(response)).toBe(true);
+        expect(response).toHaveLength(1);
+      });
+    });
+
     describe('When there is a remote forecast api error', function () {
       it('only returns the error', async function () {
         const secondBeach = {
@@ -183,7 +319,7 @@ describe('Recommendation', () => {
           .calledWith('846')
           .mockResolvedValueOnce(secondBeach);
 
-        const response = await getBestBetLocations('Rhode Island', 3);
+        const response = await getBestBetWindowsForLocation('846');
 
         expect(response).toEqual({
           error_response: {
@@ -199,7 +335,7 @@ describe('Recommendation', () => {
         // @ts-ignore
         when(getRemoteForecast).calledWith('846').mockResolvedValueOnce({});
 
-        const response = await getBestBetLocations('Rhode Island', 3);
+        const response = await getBestBetWindowsForLocation('846');
 
         expect(response).toEqual({
           error_response: {

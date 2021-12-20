@@ -13,6 +13,18 @@ enum ApiResponseStates {
 }
 
 const getResponseStatus = (
+  apiResponse: Forecast[] | MagicSeaweedApiError
+): ApiResponseStates => {
+  if (hasError(apiResponse)) {
+    return ApiResponseStates.ERROR;
+  } else if (!hasData(apiResponse as Forecast[])) {
+    return ApiResponseStates.EMPTY;
+  } else {
+    return ApiResponseStates.SUCCESS;
+  }
+};
+
+const getDeepResponseStatus = (
   apiResponse: Array<Forecast[] | MagicSeaweedApiError>
 ): ApiResponseStates => {
   if (apiResponse.some(hasError)) {
@@ -41,6 +53,24 @@ export const getBestBetLocations = async (
     const recommendations = handleSuccessfulRecommendation(
       locationForecasts as Forecast[][]
     );
+    return recommendations.slice(0, numberOfRecommendations);
+  } else {
+    return exceptionalError;
+  }
+};
+
+export const getBestBetWindowsForLocation = async (
+  spotId: string,
+  size?: number
+): Promise<Forecast[] | MagicSeaweedApiError> => {
+  const numberOfRecommendations = size || 3;
+  const windowForecasts = await getRemoteForecast(spotId);
+  const status = getResponseStatus(windowForecasts);
+
+  if (status === ApiResponseStates.ERROR) {
+    return windowForecasts as MagicSeaweedApiError;
+  } else if (status === ApiResponseStates.SUCCESS) {
+    const recommendations = (windowForecasts as Forecast[]).sort(sortForecasts);
     return recommendations.slice(0, numberOfRecommendations);
   } else {
     return exceptionalError;
