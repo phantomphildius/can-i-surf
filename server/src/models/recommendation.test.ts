@@ -185,7 +185,7 @@ describe('Recommendation', () => {
           {
             id: '846',
             localTimestamp: 2621983600,
-            solidRating: 0 as Rating,
+            solidRating: 1 as Rating,
             fadedRating: 0 as Rating,
             swell: {
               components: {
@@ -199,7 +199,7 @@ describe('Recommendation', () => {
           {
             id: '846',
             localTimestamp: 2621983601,
-            solidRating: 1 as Rating,
+            solidRating: 2 as Rating,
             fadedRating: 0 as Rating,
             swell: {
               components: {
@@ -255,20 +255,6 @@ describe('Recommendation', () => {
           {
             id: '846',
             localTimestamp: 2621983600,
-            solidRating: 0 as Rating,
-            fadedRating: 0 as Rating,
-            swell: {
-              components: {
-                combined: {
-                  height: 5.5,
-                  period: 9,
-                },
-              },
-            },
-          },
-          {
-            id: '846',
-            localTimestamp: 2621983601,
             solidRating: 1 as Rating,
             fadedRating: 0 as Rating,
             swell: {
@@ -282,8 +268,22 @@ describe('Recommendation', () => {
           },
           {
             id: '846',
-            localTimestamp: 2621983603,
+            localTimestamp: 2621983601,
             solidRating: 2 as Rating,
+            fadedRating: 0 as Rating,
+            swell: {
+              components: {
+                combined: {
+                  height: 5.5,
+                  period: 9,
+                },
+              },
+            },
+          },
+          {
+            id: '846',
+            localTimestamp: 2621983603,
+            solidRating: 3 as Rating,
             fadedRating: 1 as Rating,
             swell: {
               components: {
@@ -304,6 +304,64 @@ describe('Recommendation', () => {
 
         expect(Array.isArray(response)).toBe(true);
         expect(response).toHaveLength(1);
+      });
+    });
+
+    describe('When nothing is worth it', () => {
+      it('returns nothing', async function () {
+        const secondBeach = [
+          {
+            id: '846',
+            localTimestamp: 2621983600,
+            solidRating: 0 as Rating,
+            fadedRating: 0 as Rating,
+            swell: {
+              components: {
+                combined: {
+                  height: 5.5,
+                  period: 9,
+                },
+              },
+            },
+          },
+          {
+            id: '846',
+            localTimestamp: 2621983601,
+            solidRating: 0 as Rating,
+            fadedRating: 0 as Rating,
+            swell: {
+              components: {
+                combined: {
+                  height: 5.5,
+                  period: 9,
+                },
+              },
+            },
+          },
+          {
+            id: '846',
+            localTimestamp: 2621983603,
+            solidRating: 0 as Rating,
+            fadedRating: 1 as Rating,
+            swell: {
+              components: {
+                combined: {
+                  height: 5.5,
+                  period: 9,
+                },
+              },
+            },
+          },
+        ];
+
+        when(getRemoteForecast)
+          .calledWith('846')
+          .mockResolvedValueOnce(secondBeach);
+
+        const response = await getBestBetWindowsForLocation('846', 1);
+
+        expect(Array.isArray(response)).toBe(true);
+        expect(response).toHaveLength(0);
       });
     });
 

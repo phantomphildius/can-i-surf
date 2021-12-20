@@ -1,6 +1,6 @@
 import spotMap from './magic-seaweed/spots';
 import { getRemoteForecast } from './magic-seaweed/api';
-import { sortForecasts } from './forecast';
+import { getForecastLocationNameFromId, sortForecasts } from './forecast';
 import { Forecast, MagicSeaweedApiError } from '../types/magic-seaweed';
 import { exceptionalError } from '../constants/errors';
 
@@ -53,7 +53,7 @@ export const getBestBetLocations = async (
     const recommendations = handleSuccessfulRecommendation(
       locationForecasts as Forecast[][]
     );
-    return recommendations.slice(0, numberOfRecommendations);
+    return recommendations.filter(isWorthIt).slice(0, numberOfRecommendations);
   } else {
     return exceptionalError;
   }
@@ -71,7 +71,7 @@ export const getBestBetWindowsForLocation = async (
     return windowForecasts as MagicSeaweedApiError;
   } else if (status === ApiResponseStates.SUCCESS) {
     const recommendations = (windowForecasts as Forecast[]).sort(sortForecasts);
-    return recommendations.slice(0, numberOfRecommendations);
+    return recommendations.filter(isWorthIt).slice(0, numberOfRecommendations);
   } else {
     return exceptionalError;
   }
@@ -92,6 +92,9 @@ const hasError = (forecast: Forecast[] | MagicSeaweedApiError) =>
 
 const hasData = (response: Forecast[] | Forecast[][]) =>
   !!(Array.isArray(response) && response.length);
+
+const isWorthIt = (recommendedTimeOrPlace: Forecast): boolean =>
+  recommendedTimeOrPlace.solidRating >= 1;
 
 const buildForecastRequestForLocation = async (
   location: string

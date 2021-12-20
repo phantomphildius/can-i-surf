@@ -80,7 +80,7 @@ export const firstBeach = [
   {
     id: '907',
     localTimestamp: 4621983601,
-    solidRating: 0 as Rating,
+    solidRating: 1 as Rating,
     fadedRating: 0 as Rating,
     swell: {
       components: {
