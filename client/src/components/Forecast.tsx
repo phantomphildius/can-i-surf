@@ -6,7 +6,7 @@ import { Forecast as IForecast } from '../data';
 import ErrorContainer from './ErrorContainer';
 
 const Forecast: React.FC = () => {
-  const { spotId } = useParams();
+  const { spotId } = useParams<{ spotId: string }>();
   const {
     data: forecast,
     loading,

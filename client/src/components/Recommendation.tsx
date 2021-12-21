@@ -1,6 +1,6 @@
 import React from 'react';
 import dayjs from 'dayjs';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import {
   Card,
   CardBody,
@@ -11,8 +11,9 @@ import {
 } from 'grommet';
 
 import { Recommendation as IRecommendation } from '../data';
-export interface Props extends IRecommendation {
+interface Props extends Omit<IRecommendation, 'recommendationLocationName'> {
   id: number;
+  recommendationLocationName?: string;
 }
 
 export const unixTimeToDisplayTime = (unixTimeStamp: number): string => {
@@ -25,24 +26,33 @@ const Recommendation: React.FC<Props> = ({
   recommendationTime,
   recommendationLocationName,
   id,
-}) => (
-  <Card
-    pad="medium"
-    data-testid={`recommendation-${recommendationLocationName}`}
-  >
-    <CardHeader>
-      <Heading level="3">{recommendationLocationName}</Heading>
-    </CardHeader>
-    <CardBody>
-      <Paragraph>
-        Will be a {recommendationRating}/5 stars on{' '}
-        {unixTimeToDisplayTime(recommendationTime)}
-      </Paragraph>
-    </CardBody>
-    <CardFooter>
-      <Link to={`${id}`}>See more</Link>
-    </CardFooter>
-  </Card>
-);
+}) => {
+  const { spotId } = useParams<{ spotId: string }>();
+  const hasMoreDetails = spotId && spotId !== id.toString();
+
+  return (
+    <Card
+      pad="medium"
+      data-testid={`recommendation-${recommendationLocationName}`}
+    >
+      {recommendationLocationName && (
+        <CardHeader>
+          <Heading level="3">{recommendationLocationName}</Heading>
+        </CardHeader>
+      )}
+      <CardBody>
+        <Paragraph>
+          Will be a {recommendationRating}/5 stars on{' '}
+          {unixTimeToDisplayTime(recommendationTime)}
+        </Paragraph>
+      </CardBody>
+      {hasMoreDetails && (
+        <CardFooter>
+          <Link to={`${id}`}>See more</Link>
+        </CardFooter>
+      )}
+    </Card>
+  );
+};
 
 export default Recommendation;

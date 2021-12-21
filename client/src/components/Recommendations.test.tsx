@@ -3,7 +3,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { Grommet } from 'grommet';
 import { when } from 'jest-when';
 
-import Recommendations from './Recommendations';
+import RegionalRecommendations from './RegionalRecommendations';
 import { usePost } from '../hooks';
 
 jest.mock('../hooks/usePost');
@@ -18,7 +18,7 @@ const subject = () =>
   render(
     <Grommet plain>
       <BrowserRouter>
-        <Recommendations />
+        <RegionalRecommendations />
       </BrowserRouter>
     </Grommet>
   );

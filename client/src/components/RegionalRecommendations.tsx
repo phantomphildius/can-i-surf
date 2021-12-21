@@ -10,14 +10,15 @@ import { usePost } from '../hooks/usePost';
 import { Recommendation as IRecommendation } from '../data';
 import { useBreakpoint } from '../hooks';
 
-const Recommendations: React.FC = () => {
-  const Loader: React.FC = () => <h2>Finding out...</h2>;
-  const { region: location, spotId } = useParams();
+const RegionalRecommendations: React.FC = () => {
   const navigate = useNavigate();
   const goBack = () => navigate(-1);
+
   const size = useBreakpoint();
   const isLargeScreen = size === 'large';
 
+  const { region: location, spotId } =
+    useParams<{ region: string; spotId: string }>();
   const {
     data: recommendations,
     loading,
@@ -26,6 +27,8 @@ const Recommendations: React.FC = () => {
     '/recommendations/spot',
     { location: camelCase(location) }
   );
+
+  const Loader: React.FC = () => <Heading level="2">Finding out...</Heading>;
 
   if (loading && !(recommendations || errors)) {
     return (
@@ -83,4 +86,4 @@ const Recommendations: React.FC = () => {
   );
 };
 
-export default Recommendations;
+export default RegionalRecommendations;
