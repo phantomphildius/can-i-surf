@@ -11,10 +11,9 @@ import {
 } from 'grommet';
 
 import { Recommendation as IRecommendation } from '../data';
-export interface Props
-  extends Omit<IRecommendation, 'recommendationLocationName'> {
+export interface Props extends Omit<IRecommendation, 'locationName'> {
   id: number;
-  recommendationLocationName?: string;
+  locationName?: string;
   showSeeMoreLink: boolean;
 }
 
@@ -24,26 +23,27 @@ export const unixTimeToDisplayTime = (unixTimeStamp: number): string => {
 };
 
 const Recommendation: React.FC<Props> = ({
-  recommendationRating,
-  recommendationTime,
-  recommendationLocationName,
+  time,
+  locationName,
   id,
   showSeeMoreLink,
+  swell,
+  wind,
 }) => {
   return (
-    <Card
-      pad="medium"
-      data-testid={`recommendation-${recommendationLocationName}`}
-    >
-      {recommendationLocationName && (
+    <Card pad="medium" data-testid={`recommendation-${locationName}`}>
+      {locationName && (
         <CardHeader>
-          <Heading level="3">{recommendationLocationName}</Heading>
+          <Heading level="3">{locationName}</Heading>
         </CardHeader>
       )}
       <CardBody>
         <Paragraph>
-          Will be a {recommendationRating}/5 stars on{' '}
-          {unixTimeToDisplayTime(recommendationTime)}
+          On {unixTimeToDisplayTime(time)} the swell will be {swell.height} feet
+          coming from the {swell.direction} @ {swell.period} seconds.
+        </Paragraph>
+        <Paragraph>
+          The wind will be {wind.speed} MPH from the {wind.direction}.
         </Paragraph>
       </CardBody>
       {showSeeMoreLink && (

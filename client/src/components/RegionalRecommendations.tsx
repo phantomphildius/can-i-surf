@@ -38,6 +38,9 @@ const RegionalRecommendations: React.FC = () => {
     );
   }
 
+  const showSeeShowMoreLink = (id: number) =>
+    spotId ? spotId !== id.toString() : true;
+
   return (
     <>
       <Header region={location} />
@@ -55,7 +58,7 @@ const RegionalRecommendations: React.FC = () => {
               {recommendations.map((rec) => (
                 <Recommendation
                   key={rec.id}
-                  showSeeMoreLink={!!spotId && spotId !== rec.id.toString()}
+                  showSeeMoreLink={showSeeShowMoreLink(rec.id)}
                   {...rec}
                 />
               ))}

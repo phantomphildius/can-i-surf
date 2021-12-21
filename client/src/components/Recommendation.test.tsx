@@ -14,9 +14,17 @@ describe('Recommendation', () => {
   describe('when the recommendation is provided with a name and show more link flag', () => {
     it('renders a surf location recommendation including a time and forecast with a heading and link', () => {
       const reco = {
-        recommendationRating: 4,
-        recommendationTime: 1621983600,
-        recommendationLocationName: 'The bu',
+        swell: {
+          height: 5,
+          period: 12,
+          direction: 'S',
+        },
+        wind: {
+          speed: 11,
+          direction: 'SW',
+        },
+        time: 1621983600,
+        locationName: 'The bu',
         id: 4567,
         showSeeMoreLink: true,
       };
@@ -26,7 +34,17 @@ describe('Recommendation', () => {
       expect(screen.getByRole('heading')).toBeInTheDocument();
       expect(screen.getByText('The bu')).toBeInTheDocument();
       expect(
-        screen.getByText('Will be a 4/5 stars on Tue at 07:00 pm')
+        screen.getByText(
+          'On Tue at 07:00 pm the swell will be 5 feet coming from the S @ 12 seconds.'
+        )
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText(
+          'On Tue at 07:00 pm the swell will be 5 feet coming from the S @ 12 seconds.'
+        )
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText('The wind will be 11 MPH from the SW.')
       ).toBeInTheDocument();
 
       expect(screen.getByRole('link')).toHaveAttribute('href', '/4567');
@@ -37,9 +55,17 @@ describe('Recommendation', () => {
   describe('when the recommendation is provided with a name and no show more link flag', () => {
     it('renders a surf location recommendation including a time and forecast with a heading', () => {
       const reco = {
-        recommendationRating: 4,
-        recommendationTime: 1621983600,
-        recommendationLocationName: 'The bu',
+        swell: {
+          height: 5,
+          period: 12,
+          direction: 'S',
+        },
+        wind: {
+          speed: 11,
+          direction: 'SW',
+        },
+        time: 1621983600,
+        locationName: 'The bu',
         id: 4567,
         showSeeMoreLink: false,
       };
@@ -49,7 +75,12 @@ describe('Recommendation', () => {
       expect(screen.getByRole('heading')).toBeInTheDocument();
       expect(screen.getByText('The bu')).toBeInTheDocument();
       expect(
-        screen.getByText('Will be a 4/5 stars on Tue at 07:00 pm')
+        screen.getByText(
+          'On Tue at 07:00 pm the swell will be 5 feet coming from the S @ 12 seconds.'
+        )
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText('The wind will be 11 MPH from the SW.')
       ).toBeInTheDocument();
 
       expect(screen.queryByRole('link')).toBeNull();
@@ -60,8 +91,16 @@ describe('Recommendation', () => {
   describe('when the recommendation is provided without a name and show more link flag', () => {
     it('renders a surf location recommendation including a time and forecast', () => {
       const reco = {
-        recommendationRating: 4,
-        recommendationTime: 1621983600,
+        swell: {
+          height: 5,
+          period: 12,
+          direction: 'S',
+        },
+        wind: {
+          speed: 11,
+          direction: 'SW',
+        },
+        time: 1621983600,
         id: 4567,
         showSeeMoreLink: false,
       };
@@ -70,7 +109,12 @@ describe('Recommendation', () => {
 
       expect(screen.queryByRole('heading')).toBeNull();
       expect(
-        screen.getByText('Will be a 4/5 stars on Tue at 07:00 pm')
+        screen.getByText(
+          'On Tue at 07:00 pm the swell will be 5 feet coming from the S @ 12 seconds.'
+        )
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText('The wind will be 11 MPH from the SW.')
       ).toBeInTheDocument();
 
       expect(screen.queryByRole('link')).toBeNull();

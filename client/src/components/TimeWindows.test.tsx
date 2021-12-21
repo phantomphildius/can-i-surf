@@ -69,13 +69,29 @@ describe('TimeWindows', () => {
           loading: false,
           data: [
             {
-              recommendationRating: 3,
-              recommendationTime: 1621983600,
+              swell: {
+                height: 8.2,
+                direction: 'SSE',
+                period: 10,
+              },
+              wind: {
+                speed: 14,
+                direction: 'SE',
+              },
+              time: 1621983600,
               id: 1234,
             },
             {
-              recommendationRating: 2,
-              recommendationTime: 1621983810,
+              swell: {
+                height: 4.2,
+                direction: 'SSE',
+                period: '7',
+              },
+              wind: {
+                speed: 14,
+                direction: 'SE',
+              },
+              time: 1621983810,
               id: 6789,
             },
           ],
@@ -94,11 +110,13 @@ describe('TimeWindows', () => {
 
       const [bestTimeWindow, secondBest] = recommendations;
 
-      expect(bestTimeWindow).toHaveTextContent('3/5 stars');
-      expect(bestTimeWindow).toHaveTextContent('Tue at 07:00 pm');
+      expect(bestTimeWindow).toHaveTextContent(
+        'On Tue at 07:00 pm the swell will be 8.2 feet coming from the SSE @ 10 seconds.The wind will be 14 MPH from the SE.'
+      );
 
-      expect(secondBest).toHaveTextContent('2/5 stars');
-      expect(secondBest).toHaveTextContent('Tue at 07:03 pm');
+      expect(secondBest).toHaveTextContent(
+        'On Tue at 07:03 pm the swell will be 4.2 feet coming from the SSE @ 7 seconds.The wind will be 14 MPH from the SE.'
+      );
     });
   });
 });

@@ -1,9 +1,18 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
+import { Grommet } from 'grommet';
+import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 
-test.skip('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+const subject = () =>
+  render(
+    <Grommet plain>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </Grommet>
+  );
+
+test('renders learn react link', () => {
+  subject();
+  expect(screen.getByText('Can I Surf?')).toBeInTheDocument();
 });
