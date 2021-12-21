@@ -5,6 +5,6 @@ import { createWindowRecommendation } from '../../controllers/recommendations/wi
 const router = Router();
 
 router.post('/spot', createSpotRecommendation);
-router.post('window', createWindowRecommendation);
+router.post('/window', createWindowRecommendation);
 
 export default router;
