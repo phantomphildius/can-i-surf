@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { Outlet, useParams, useNavigate } from 'react-router';
 
 import camelCase from 'lodash.camelcase';
@@ -11,15 +11,13 @@ import { Recommendation as IRecommendation } from '../data';
 import { useBreakpoint } from '../hooks';
 
 const RegionalRecommendations: React.FC = () => {
-  const ref = useRef();
   const navigate = useNavigate();
   const goBack = () => navigate(-1);
 
   const size = useBreakpoint();
   const isLargeScreen = size === 'large';
 
-  const { region: location, spotId } =
-    useParams<{ region: string; spotId: string }>();
+  const { region: location, spotId } = useParams();
   const {
     data: recommendations,
     loading,
@@ -57,9 +55,7 @@ const RegionalRecommendations: React.FC = () => {
               {recommendations.map((rec) => (
                 <Recommendation
                   key={rec.id}
-                  showSeeMoreLink={
-                    spotId ?? (true && spotId !== rec.id.toString())
-                  }
+                  showSeeMoreLink={!!spotId && spotId !== rec.id.toString()}
                   {...rec}
                 />
               ))}

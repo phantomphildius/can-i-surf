@@ -6,7 +6,7 @@ import { Forecast, MagicSeaweedApiError } from '../../types/magic-seaweed';
 const baseURL = `https://magicseaweed.com/api/${process.env.magic_seaweed_api_key}`;
 const units = 'us';
 const fields =
-  'fadedRating,solidRating,swell.components.combined.height,swell.components.combined.period,localTimestamp';
+  'fadedRating,solidRating,swell.components.combined.height,swell.components.combined.period,swell.components.combined.compassDirection,localTimestamp,wind.speed,wind.compassDirection';
 const baseParams = { units, fields };
 const apiInstance = axios.create({ baseURL });
 

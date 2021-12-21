@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
-import errorTypes, { ApiError } from '../../types/errors';
-import { MagicSeaweedApiError } from '../../types/magic-seaweed';
+import { errorTypes, ApiError } from '../../types';
+import { MagicSeaweedApiError } from '../../types';
 
 export const parameterErrorHandler = (response: Response) => {
   const { parameter: parameterError } = errorTypes;

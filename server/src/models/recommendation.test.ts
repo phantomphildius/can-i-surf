@@ -47,8 +47,13 @@ describe('Recommendation', () => {
                 combined: {
                   height: 5.5,
                   period: 9,
+                  compassDirection: 'NW',
                 },
               },
+            },
+            wind: {
+              speed: 8,
+              compassDirection: 'S',
             },
           },
           {
@@ -61,8 +66,13 @@ describe('Recommendation', () => {
                 combined: {
                   height: 5.5,
                   period: 9,
+                  compassDirection: 'NW',
                 },
               },
+            },
+            wind: {
+              speed: 8,
+              compassDirection: 'S',
             },
           },
         ];
@@ -103,8 +113,13 @@ describe('Recommendation', () => {
                 combined: {
                   height: 5.5,
                   period: 9,
+                  compassDirection: 'NW',
                 },
               },
+            },
+            wind: {
+              speed: 8,
+              compassDirection: 'S',
             },
           },
           {
@@ -117,8 +132,13 @@ describe('Recommendation', () => {
                 combined: {
                   height: 5.5,
                   period: 9,
+                  compassDirection: 'NW',
                 },
               },
+            },
+            wind: {
+              speed: 8,
+              compassDirection: 'S',
             },
           },
         ];
@@ -192,8 +212,13 @@ describe('Recommendation', () => {
                 combined: {
                   height: 5.5,
                   period: 9,
+                  compassDirection: 'NW',
                 },
               },
+            },
+            wind: {
+              speed: 8,
+              compassDirection: 'S',
             },
           },
           {
@@ -206,8 +231,13 @@ describe('Recommendation', () => {
                 combined: {
                   height: 5.5,
                   period: 9,
+                  compassDirection: 'NW',
                 },
               },
+            },
+            wind: {
+              speed: 8,
+              compassDirection: 'S',
             },
           },
           {
@@ -220,8 +250,13 @@ describe('Recommendation', () => {
                 combined: {
                   height: 5.5,
                   period: 9,
+                  compassDirection: 'NW',
                 },
               },
+            },
+            wind: {
+              speed: 8,
+              compassDirection: 'S',
             },
           },
         ];
@@ -262,8 +297,13 @@ describe('Recommendation', () => {
                 combined: {
                   height: 5.5,
                   period: 9,
+                  compassDirection: 'NW',
                 },
               },
+            },
+            wind: {
+              speed: 8,
+              compassDirection: 'S',
             },
           },
           {
@@ -276,8 +316,13 @@ describe('Recommendation', () => {
                 combined: {
                   height: 5.5,
                   period: 9,
+                  compassDirection: 'NW',
                 },
               },
+            },
+            wind: {
+              speed: 8,
+              compassDirection: 'S',
             },
           },
           {
@@ -290,8 +335,13 @@ describe('Recommendation', () => {
                 combined: {
                   height: 5.5,
                   period: 9,
+                  compassDirection: 'NW',
                 },
               },
+            },
+            wind: {
+              speed: 8,
+              compassDirection: 'S',
             },
           },
         ];
@@ -320,8 +370,13 @@ describe('Recommendation', () => {
                 combined: {
                   height: 5.5,
                   period: 9,
+                  compassDirection: 'NW',
                 },
               },
+            },
+            wind: {
+              speed: 8,
+              compassDirection: 'S',
             },
           },
           {
@@ -334,8 +389,13 @@ describe('Recommendation', () => {
                 combined: {
                   height: 5.5,
                   period: 9,
+                  compassDirection: 'NW',
                 },
               },
+            },
+            wind: {
+              speed: 8,
+              compassDirection: 'S',
             },
           },
           {
@@ -348,8 +408,13 @@ describe('Recommendation', () => {
                 combined: {
                   height: 5.5,
                   period: 9,
+                  compassDirection: 'NW',
                 },
               },
+            },
+            wind: {
+              speed: 8,
+              compassDirection: 'S',
             },
           },
         ];

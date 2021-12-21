@@ -7,7 +7,7 @@ import { usePost, useBreakpoint } from '../hooks';
 import { Recommendation as IRecommendation } from '../data';
 
 const TimeWindows: React.FC = () => {
-  const { spotId } = useParams<{ spotId: string }>();
+  const { spotId } = useParams();
 
   const {
     data: timeWindows,

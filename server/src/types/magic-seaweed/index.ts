@@ -5,8 +5,14 @@ export interface SwellForecast {
     combined: {
       height: number;
       period: number;
+      compassDirection: string;
     };
   };
+}
+
+interface WindForecast {
+  speed: number;
+  compassDirection: string;
 }
 
 export interface Forecast {
@@ -15,6 +21,7 @@ export interface Forecast {
   fadedRating: Rating;
   solidRating: Rating;
   swell: SwellForecast;
+  wind: WindForecast;
 }
 
 export interface MagicSeaweedApiError {
