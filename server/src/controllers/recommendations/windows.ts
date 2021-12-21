@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 
-import { getBestBetLocations } from '../../models/recommendation';
-import { getForecastLocationNameFromId } from '../../models/forecast';
+import { getBestBetWindowsForLocation } from '../../models/recommendation';
 import { Forecast, Rating } from '../../types/magic-seaweed';
 import {
   parameterErrorHandler,
@@ -11,18 +10,17 @@ import {
 interface ResponseShape {
   recommendationTime: number;
   id: string;
-  recommendationLocationName: string;
   recommendationRating: Rating;
 }
 
-export const createSpotRecommendation = async (
-  request: Request<{}, {}, { location: string }>,
+export const createWindowRecommendation = async (
+  request: Request<{}, {}, { spotId: string }>,
   response: Response
 ) => {
-  const { location } = request.body;
+  const { spotId } = request.body;
 
-  if (location) {
-    const bestBets = await getBestBetLocations(location);
+  if (spotId) {
+    const bestBets = await getBestBetWindowsForLocation(spotId);
 
     return responseHandler<Forecast, ResponseShape>(
       bestBets,
@@ -37,7 +35,6 @@ export const createSpotRecommendation = async (
 const onSuccess = (bestBets: Forecast[]): ResponseShape[] =>
   bestBets.map(({ localTimestamp, id, solidRating }) => ({
     recommendationTime: localTimestamp,
-    recommendationLocationName: getForecastLocationNameFromId(id),
     recommendationRating: solidRating,
     id,
   }));
