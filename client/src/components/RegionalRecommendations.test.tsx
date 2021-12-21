@@ -23,7 +23,7 @@ const subject = () =>
     </Grommet>
   );
 
-describe('Recommendations', () => {
+describe('RegionalRecommendations', () => {
   describe('when the component is loading data', () => {
     beforeEach(() => {
       when(usePost)

@@ -1,6 +1,6 @@
 import React from 'react';
 import dayjs from 'dayjs';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import {
   Card,
   CardBody,
@@ -11,9 +11,11 @@ import {
 } from 'grommet';
 
 import { Recommendation as IRecommendation } from '../data';
-interface Props extends Omit<IRecommendation, 'recommendationLocationName'> {
+export interface Props
+  extends Omit<IRecommendation, 'recommendationLocationName'> {
   id: number;
   recommendationLocationName?: string;
+  showSeeMoreLink: boolean;
 }
 
 export const unixTimeToDisplayTime = (unixTimeStamp: number): string => {
@@ -26,10 +28,8 @@ const Recommendation: React.FC<Props> = ({
   recommendationTime,
   recommendationLocationName,
   id,
+  showSeeMoreLink,
 }) => {
-  const { spotId } = useParams<{ spotId: string }>();
-  const hasMoreDetails = spotId && spotId !== id.toString();
-
   return (
     <Card
       pad="medium"
@@ -46,7 +46,7 @@ const Recommendation: React.FC<Props> = ({
           {unixTimeToDisplayTime(recommendationTime)}
         </Paragraph>
       </CardBody>
-      {hasMoreDetails && (
+      {showSeeMoreLink && (
         <CardFooter>
           <Link to={`${id}`}>See more</Link>
         </CardFooter>

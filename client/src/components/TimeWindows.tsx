@@ -34,16 +34,27 @@ const TimeWindows: React.FC = () => {
 
   return (
     <>
-      <Box direction="row" fill="horizontal">
+      <Box
+        direction="row"
+        fill="horizontal"
+        justify="between"
+        pad={{ horizontal: 'medium' }}
+      >
         <Heading level={isLargeScreen ? '3' : '2'}>Secret Spot</Heading>
-        <Box justify="end" alignSelf="center">
-          <Link to="..">X</Link>
+        <Box alignSelf="center">
+          <Link to=".." style={{ textDecoration: 'none', color: 'black' }}>
+            X
+          </Link>
         </Box>
       </Box>
       {timeWindows && !errors ? (
         <Box tag="section" justify="center" gap="medium" pad="medium">
           {timeWindows.map((tw) => (
-            <Recommendation key={tw.recommendationTime} {...tw} />
+            <Recommendation
+              key={tw.recommendationTime}
+              {...tw}
+              showSeeMoreLink={false}
+            />
           ))}
         </Box>
       ) : (

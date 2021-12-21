@@ -1,6 +1,6 @@
 import spotMap from './magic-seaweed/spots';
 import { getRemoteForecast } from './magic-seaweed/api';
-import { getForecastLocationNameFromId, sortForecasts } from './forecast';
+import { sortForecasts } from './forecast';
 import { Forecast, MagicSeaweedApiError } from '../types/magic-seaweed';
 import { exceptionalError } from '../constants/errors';
 

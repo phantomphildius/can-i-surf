@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Outlet, useParams, useNavigate } from 'react-router';
 
 import camelCase from 'lodash.camelcase';
@@ -11,6 +11,7 @@ import { Recommendation as IRecommendation } from '../data';
 import { useBreakpoint } from '../hooks';
 
 const RegionalRecommendations: React.FC = () => {
+  const ref = useRef();
   const navigate = useNavigate();
   const goBack = () => navigate(-1);
 
@@ -45,7 +46,7 @@ const RegionalRecommendations: React.FC = () => {
       <Heading level="2">Best bets are</Heading>
       {recommendations && !errors ? (
         <>
-          <Box direction="row-responsive">
+          <Box direction="row-responsive" gap="xlarge">
             <Box
               tag="section"
               justify="center"
@@ -54,7 +55,13 @@ const RegionalRecommendations: React.FC = () => {
               basis={isLargeScreen ? '1/2' : ''}
             >
               {recommendations.map((rec) => (
-                <Recommendation key={rec.id} {...rec} />
+                <Recommendation
+                  key={rec.id}
+                  showSeeMoreLink={
+                    spotId ?? (true && spotId !== rec.id.toString())
+                  }
+                  {...rec}
+                />
               ))}
             </Box>
             {spotId && isLargeScreen && (
@@ -66,7 +73,6 @@ const RegionalRecommendations: React.FC = () => {
           {spotId && !isLargeScreen && (
             <Layer
               full
-              margin="medium"
               background="salmon"
               animation="fadeIn"
               onEsc={goBack}
