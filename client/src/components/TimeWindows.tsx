@@ -7,7 +7,7 @@ import { usePost, useBreakpoint } from '../hooks';
 import { Recommendation as IRecommendation } from '../data';
 
 const TimeWindows: React.FC = () => {
-  const { spotId } = useParams<{ spotId: string }>();
+  const { spotId } = useParams();
 
   const {
     data: timeWindows,
@@ -50,11 +50,7 @@ const TimeWindows: React.FC = () => {
       {timeWindows && !errors ? (
         <Box tag="section" justify="center" gap="medium" pad="medium">
           {timeWindows.map((tw) => (
-            <Recommendation
-              key={tw.recommendationTime}
-              {...tw}
-              showSeeMoreLink={false}
-            />
+            <Recommendation key={tw.time} {...tw} showSeeMoreLink={false} />
           ))}
         </Box>
       ) : (

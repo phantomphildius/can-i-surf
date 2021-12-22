@@ -1,7 +1,7 @@
 import spotMap from './magic-seaweed/spots';
 import { getRemoteForecast } from './magic-seaweed/api';
 import { sortForecasts } from './forecast';
-import { Forecast, MagicSeaweedApiError } from '../types/magic-seaweed';
+import { Forecast, MagicSeaweedApiError } from '../types/';
 import { exceptionalError } from '../constants/errors';
 
 const { isArray } = Array;

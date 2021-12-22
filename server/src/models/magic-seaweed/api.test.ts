@@ -6,7 +6,7 @@ import { ruggles } from '../../testing';
 
 const baseRequestParams = {
   fields:
-    'fadedRating,solidRating,swell.components.combined.height,swell.components.combined.period,localTimestamp',
+    'fadedRating,solidRating,swell.components.combined.height,swell.components.combined.period,swell.components.combined.compassDirection,localTimestamp,wind.speed,wind.compassDirection',
   units: 'us',
 };
 
@@ -113,9 +113,14 @@ describe('Api', () => {
               components: {
                 combined: {
                   height: 5.5,
+                  compassDirection: 'NW',
                   period: 9,
                 },
               },
+            },
+            wind: {
+              compassDirection: 'SW',
+              speed: 12,
             },
           },
           {
@@ -127,9 +132,14 @@ describe('Api', () => {
               components: {
                 combined: {
                   height: 5.5,
+                  compassDirection: 'NW',
                   period: 9,
                 },
               },
+            },
+            wind: {
+              compassDirection: 'SW',
+              speed: 12,
             },
           },
         ]);

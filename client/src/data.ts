@@ -1,8 +1,9 @@
 export interface Recommendation {
-  recommendationTime: number;
-  recommendationRating: number;
+  time: number;
+  wind: WindForecast;
+  swell: SwellForecast;
   id: number;
-  recommendationLocationName: string;
+  locationName: string;
 }
 
 export interface ApiResponse<T> {
@@ -14,21 +15,15 @@ export interface ApiResponse<T> {
 type Rating = 1 | 2 | 3 | 4 | 5;
 
 interface SwellForecast {
-  components: {
-    combined: {
-      height: number;
-      period: number;
-    };
-  };
+  height: number;
+  period: number;
+  direction: string;
 }
 
-export interface Forecast {
-  localTimestamp: number;
-  fadedRating: Rating;
-  solidRating: Rating;
-  swell: SwellForecast;
+interface WindForecast {
+  speed: number;
+  direction: string;
 }
-
 export interface ApiError {
   status: number;
   details: string;

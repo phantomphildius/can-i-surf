@@ -105,13 +105,29 @@ describe('#createWindowRecommendation', () => {
       expect(mockResponse.json).toBeCalledWith([
         {
           id: '574',
-          recommendationRating: 3,
-          recommendationTime: 1621983600,
+          wind: {
+            direction: 'SW',
+            speed: 12,
+          },
+          swell: {
+            direction: 'NW',
+            height: 5.5,
+            period: 9,
+          },
+          time: 1621983600,
         },
         {
           id: '574',
-          recommendationRating: 4,
-          recommendationTime: 1621983601,
+          wind: {
+            direction: 'SW',
+            speed: 12,
+          },
+          swell: {
+            direction: 'NW',
+            height: 5.5,
+            period: 9,
+          },
+          time: 1621983601,
         },
       ]);
     });

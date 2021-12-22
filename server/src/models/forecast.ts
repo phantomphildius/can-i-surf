@@ -1,4 +1,4 @@
-import { Forecast, SwellForecast } from '../types/magic-seaweed';
+import { Forecast, SwellForecast } from '../types';
 import spotMap from './magic-seaweed/spots';
 
 export const getForecastLocationNameFromId = (spotId: string): string => {
@@ -15,8 +15,11 @@ export const sortForecasts = (forecastA: Forecast, forecastB: Forecast) =>
   calculateSwellMagnitude(forecastB.swell) -
     calculateSwellMagnitude(forecastA.swell);
 
-const calculateSwellMagnitude = (swell: SwellForecast): number =>
-  Object.values(swell.components.combined).reduce(
+const calculateSwellMagnitude = (swell: SwellForecast): number => {
+  const { compassDirection: _compassDirection, ...magnitudeProperties } =
+    swell.components.combined;
+  return Object.values(magnitudeProperties).reduce(
     (memo, value) => memo + value,
     0
   );
+};

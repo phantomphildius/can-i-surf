@@ -1,16 +1,17 @@
 import { Request, Response } from 'express';
 
 import { getBestBetWindowsForLocation } from '../../models/recommendation';
-import { Forecast, Rating } from '../../types/magic-seaweed';
+import { Forecast, WindResponse, SwellResponse } from '../../types';
 import {
   parameterErrorHandler,
   responseHandler,
 } from '../../utils/api/handlers';
 
 interface ResponseShape {
-  recommendationTime: number;
+  time: number;
   id: string;
-  recommendationRating: Rating;
+  wind: WindResponse;
+  swell: SwellResponse;
 }
 
 export const createWindowRecommendation = async (
@@ -33,8 +34,25 @@ export const createWindowRecommendation = async (
 };
 
 const onSuccess = (bestBets: Forecast[]): ResponseShape[] =>
-  bestBets.map(({ localTimestamp, id, solidRating }) => ({
-    recommendationTime: localTimestamp,
-    recommendationRating: solidRating,
-    id,
-  }));
+  bestBets.map(({ localTimestamp, id, swell, wind }) => {
+    const {
+      compassDirection: swellDirection,
+      height,
+      period,
+    } = swell.components.combined;
+    const { speed, compassDirection: windDirection } = wind;
+
+    return {
+      time: localTimestamp,
+      swell: {
+        height,
+        period,
+        direction: swellDirection,
+      },
+      wind: {
+        speed,
+        direction: windDirection,
+      },
+      id,
+    };
+  });

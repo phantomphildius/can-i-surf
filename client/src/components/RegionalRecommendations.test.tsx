@@ -69,15 +69,31 @@ describe('RegionalRecommendations', () => {
           loading: false,
           data: [
             {
-              recommendationRating: 3,
-              recommendationTime: 1621983600,
-              recommendationLocationName: 'Pipe',
+              swell: {
+                height: 8.2,
+                direction: 'SSE',
+                period: 10,
+              },
+              wind: {
+                speed: 14,
+                direction: 'SE',
+              },
+              time: 1621983600,
+              locationName: 'Pipe',
               id: 1234,
             },
             {
-              recommendationRating: 2,
-              recommendationTime: 1621983610,
-              recommendationLocationName: 'Rockies',
+              swell: {
+                height: 8.2,
+                direction: 'SSE',
+                period: 10,
+              },
+              wind: {
+                speed: 14,
+                direction: 'SE',
+              },
+              time: 1621983610,
+              locationName: 'Rockies',
               id: 6789,
             },
           ],

@@ -109,15 +109,31 @@ describe('#createSpotRecommendation', () => {
       expect(mockResponse.json).toBeCalledWith([
         {
           id: '574',
-          recommendationLocationName: 'Ruggles',
-          recommendationRating: 3,
-          recommendationTime: 1621983600,
+          locationName: 'Ruggles',
+          wind: {
+            direction: 'SW',
+            speed: 12,
+          },
+          swell: {
+            direction: 'NW',
+            height: 5.5,
+            period: 9,
+          },
+          time: 1621983600,
         },
         {
           id: '574',
-          recommendationLocationName: 'Ruggles',
-          recommendationRating: 4,
-          recommendationTime: 1621983601,
+          wind: {
+            direction: 'SW',
+            speed: 12,
+          },
+          swell: {
+            direction: 'NW',
+            height: 5.5,
+            period: 9,
+          },
+          locationName: 'Ruggles',
+          time: 1621983601,
         },
       ]);
     });

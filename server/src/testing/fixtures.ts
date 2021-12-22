@@ -11,8 +11,13 @@ export const ruggles = [
         combined: {
           height: 5.5,
           period: 9,
+          compassDirection: 'NW',
         },
       },
+    },
+    wind: {
+      speed: 12,
+      compassDirection: 'SW',
     },
   },
   {
@@ -25,8 +30,13 @@ export const ruggles = [
         combined: {
           height: 5.5,
           period: 9,
+          compassDirection: 'NW',
         },
       },
+    },
+    wind: {
+      speed: 12,
+      compassDirection: 'SW',
     },
   },
 ];
@@ -42,8 +52,13 @@ export const matunuck = [
         combined: {
           height: 5.5,
           period: 9,
+          compassDirection: 'NW',
         },
       },
+    },
+    wind: {
+      speed: 12,
+      compassDirection: 'SW',
     },
   },
   {
@@ -56,8 +71,13 @@ export const matunuck = [
         combined: {
           height: 2,
           period: 5,
+          compassDirection: 'NW',
         },
       },
+    },
+    wind: {
+      speed: 12,
+      compassDirection: 'SW',
     },
   },
 ];
@@ -73,8 +93,13 @@ export const firstBeach = [
         combined: {
           height: 2,
           period: 5,
+          compassDirection: 'NW',
         },
       },
+    },
+    wind: {
+      speed: 12,
+      compassDirection: 'SW',
     },
   },
   {
@@ -87,8 +112,13 @@ export const firstBeach = [
         combined: {
           height: 2,
           period: 5,
+          compassDirection: 'NW',
         },
       },
+    },
+    wind: {
+      speed: 12,
+      compassDirection: 'SW',
     },
   },
 ];
