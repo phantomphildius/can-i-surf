@@ -1,7 +1,7 @@
 import React from 'react';
 import dayjs from 'dayjs';
-import { Link } from 'react-router-dom';
 import {
+  Button,
   Card,
   CardBody,
   CardFooter,
@@ -15,6 +15,7 @@ export interface Props extends Omit<IRecommendation, 'locationName'> {
   id: number;
   locationName?: string;
   showSeeMoreLink: boolean;
+  handleSpotSelection?: (spotId: number) => void;
 }
 
 export const unixTimeToDisplayTime = (unixTimeStamp: number): string => {
@@ -23,12 +24,13 @@ export const unixTimeToDisplayTime = (unixTimeStamp: number): string => {
 };
 
 const Recommendation: React.FC<Props> = ({
+  id,
   time,
   locationName,
-  id,
-  showSeeMoreLink,
   swell,
   wind,
+  showSeeMoreLink,
+  handleSpotSelection,
 }) => {
   return (
     <Card pad="medium" data-testid={`recommendation-${locationName}`}>
@@ -46,9 +48,9 @@ const Recommendation: React.FC<Props> = ({
           The wind will be {wind.speed} MPH from the {wind.direction}.
         </Paragraph>
       </CardBody>
-      {showSeeMoreLink && (
+      {showSeeMoreLink && handleSpotSelection && (
         <CardFooter>
-          <Link to={`${id}`}>See more</Link>
+          <Button onClick={() => handleSpotSelection(id)}>See more</Button>
         </CardFooter>
       )}
     </Card>

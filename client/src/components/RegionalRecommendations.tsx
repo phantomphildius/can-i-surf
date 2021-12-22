@@ -1,6 +1,5 @@
-import React from 'react';
-import { Outlet, useParams, useNavigate } from 'react-router';
-
+import React, { useState } from 'react';
+import { useParams } from 'react-router';
 import camelCase from 'lodash.camelcase';
 import { Box, Heading, Layer } from 'grommet';
 
@@ -9,15 +8,28 @@ import Header from './Header';
 import { usePost } from '../hooks/usePost';
 import { Recommendation as IRecommendation } from '../data';
 import { useBreakpoint } from '../hooks';
+import TimeWindows from './TimeWindows';
 
 const RegionalRecommendations: React.FC = () => {
-  const navigate = useNavigate();
-  const goBack = () => navigate(-1);
+  const [isLocationDetailsOpen, setIsLocationDetailsOpen] =
+    useState<boolean>(false);
+  const [spotId, setSpotId] = useState<number | null>(null);
 
   const size = useBreakpoint();
   const isLargeScreen = size === 'large';
 
-  const { region: location, spotId } = useParams();
+  const showSeeShowMoreLink = (id: number) => (spotId ? spotId !== id : true);
+  const showRecommendationDetails = spotId && isLocationDetailsOpen;
+  const handleSpotSelection = (spotId: number) => {
+    setIsLocationDetailsOpen(true);
+    setSpotId(spotId);
+  };
+  const handleRecommendationDetailsClose = () => {
+    setIsLocationDetailsOpen(false);
+    setSpotId(null);
+  };
+
+  const { region: location } = useParams();
   const {
     data: recommendations,
     loading,
@@ -38,9 +50,6 @@ const RegionalRecommendations: React.FC = () => {
     );
   }
 
-  const showSeeShowMoreLink = (id: number) =>
-    spotId ? spotId !== id.toString() : true;
-
   return (
     <>
       <Header region={location} />
@@ -59,25 +68,32 @@ const RegionalRecommendations: React.FC = () => {
                 <Recommendation
                   key={rec.id}
                   showSeeMoreLink={showSeeShowMoreLink(rec.id)}
+                  handleSpotSelection={handleSpotSelection}
                   {...rec}
                 />
               ))}
             </Box>
-            {spotId && isLargeScreen && (
+            {isLargeScreen && showRecommendationDetails && (
               <Box animation="fadeIn">
-                <Outlet />
+                <TimeWindows
+                  handleCloseButton={handleRecommendationDetailsClose}
+                  spotId={spotId}
+                />
               </Box>
             )}
           </Box>
-          {spotId && !isLargeScreen && (
+          {!isLargeScreen && showRecommendationDetails && (
             <Layer
               full
               background="salmon"
               animation="fadeIn"
-              onEsc={goBack}
-              onClickOutside={goBack}
+              onEsc={() => handleRecommendationDetailsClose()}
+              onClickOutside={() => handleRecommendationDetailsClose()}
             >
-              <Outlet />
+              <TimeWindows
+                handleCloseButton={handleRecommendationDetailsClose}
+                spotId={spotId}
+              />
             </Layer>
           )}
         </>

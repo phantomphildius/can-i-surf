@@ -1,21 +1,20 @@
-import { Box, Heading } from 'grommet';
+import { Box, Button, Heading } from 'grommet';
 import React from 'react';
-import { useParams, Link } from 'react-router-dom';
 
 import Recommendation from './Recommendation';
 import { usePost, useBreakpoint } from '../hooks';
 import { Recommendation as IRecommendation } from '../data';
 
-const TimeWindows: React.FC = () => {
-  const { spotId } = useParams();
-
+const TimeWindows: React.FC<{
+  handleCloseButton: () => void;
+  spotId: number;
+}> = ({ handleCloseButton, spotId }) => {
   const {
     data: timeWindows,
     loading,
     errors,
-  } = usePost<{ spotId: string }, IRecommendation[]>(
+  } = usePost<{ spotId: number }, IRecommendation[]>(
     '/recommendations/window',
-    // @ts-ignore
     { spotId }
   );
 
@@ -42,9 +41,7 @@ const TimeWindows: React.FC = () => {
       >
         <Heading level={isLargeScreen ? '3' : '2'}>Secret Spot</Heading>
         <Box alignSelf="center">
-          <Link to=".." style={{ textDecoration: 'none', color: 'black' }}>
-            X
-          </Link>
+          <Button onClick={() => handleCloseButton()}>X</Button>
         </Box>
       </Box>
       {timeWindows && !errors ? (

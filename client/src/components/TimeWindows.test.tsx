@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
+import userEvent from '@testing-library/user-event';
 import { Grommet } from 'grommet';
 import { when } from 'jest-when';
 
@@ -7,19 +7,12 @@ import TimeWindows from './TimeWindows';
 import { usePost } from '../hooks';
 
 jest.mock('../hooks/usePost');
-jest.mock('react-router', () => ({
-  ...jest.requireActual('react-router'),
-  useParams: () => ({
-    spotId: '846',
-  }),
-}));
 
+const handleClose = jest.fn();
 const subject = () =>
   render(
     <Grommet plain>
-      <BrowserRouter>
-        <TimeWindows />
-      </BrowserRouter>
+      <TimeWindows spotId={846} handleCloseButton={handleClose} />
     </Grommet>
   );
 
@@ -27,7 +20,7 @@ describe('TimeWindows', () => {
   describe('when the component is loading data', () => {
     beforeEach(() => {
       when(usePost)
-        .calledWith('/recommendations/window', { spotId: '846' })
+        .calledWith('/recommendations/window', { spotId: 846 })
         .mockReturnValue({
           loading: true,
           data: undefined,
@@ -45,7 +38,7 @@ describe('TimeWindows', () => {
   describe('when the component is handed an error', () => {
     beforeEach(() => {
       when(usePost)
-        .calledWith('/recommendations/window', { spotId: '846' })
+        .calledWith('/recommendations/window', { spotId: 846 })
         .mockReturnValue({
           loading: false,
           data: undefined,
@@ -64,7 +57,7 @@ describe('TimeWindows', () => {
   describe('when the component is handed the response', () => {
     beforeEach(() => {
       when(usePost)
-        .calledWith('/recommendations/window', { spotId: '846' })
+        .calledWith('/recommendations/window', { spotId: 846 })
         .mockReturnValue({
           loading: false,
           data: [
@@ -117,6 +110,17 @@ describe('TimeWindows', () => {
       expect(secondBest).toHaveTextContent(
         'On Tue at 07:03 pm the swell will be 4.2 feet coming from the SSE @ 7 seconds.The wind will be 14 MPH from the SE.'
       );
+
+      expect(screen.queryByText('See more')).toBeNull();
+    });
+
+    it('handles the close button click appropriately', () => {
+      subject();
+
+      const closeButton = screen.getByRole('button');
+      userEvent.click(closeButton);
+
+      expect(handleClose).toHaveBeenCalled();
     });
   });
 });
