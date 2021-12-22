@@ -10,12 +10,12 @@ import {
   Paragraph,
 } from 'grommet';
 
-import { Recommendation as IRecommendation } from '../data';
+import { Recommendation as IRecommendation, Spot } from '../data';
 export interface Props extends Omit<IRecommendation, 'locationName'> {
   id: number;
   locationName?: string;
   showSeeMoreLink: boolean;
-  handleSpotSelection?: (spotId: number) => void;
+  handleSpotSelection?: (spot: Spot) => void;
 }
 
 export const unixTimeToDisplayTime = (unixTimeStamp: number): string => {
@@ -50,7 +50,13 @@ const Recommendation: React.FC<Props> = ({
       </CardBody>
       {showSeeMoreLink && handleSpotSelection && (
         <CardFooter>
-          <Button onClick={() => handleSpotSelection(id)}>See more</Button>
+          <Button
+            onClick={() =>
+              handleSpotSelection({ id, name: locationName as string })
+            }
+          >
+            See more
+          </Button>
         </CardFooter>
       )}
     </Card>

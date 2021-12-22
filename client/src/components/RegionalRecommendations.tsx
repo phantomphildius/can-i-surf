@@ -6,27 +6,27 @@ import { Box, Heading, Layer } from 'grommet';
 import Recommendation from './Recommendation';
 import Header from './Header';
 import { usePost } from '../hooks/usePost';
-import { Recommendation as IRecommendation } from '../data';
+import { Recommendation as IRecommendation, Spot } from '../data';
 import { useBreakpoint } from '../hooks';
 import TimeWindows from './TimeWindows';
 
 const RegionalRecommendations: React.FC = () => {
   const [isLocationDetailsOpen, setIsLocationDetailsOpen] =
     useState<boolean>(false);
-  const [spotId, setSpotId] = useState<number | null>(null);
+  const [spot, setSpot] = useState<Spot | null>(null);
 
   const size = useBreakpoint();
   const isLargeScreen = size === 'large';
 
-  const showSeeShowMoreLink = (id: number) => (spotId ? spotId !== id : true);
-  const showRecommendationDetails = spotId && isLocationDetailsOpen;
-  const handleSpotSelection = (spotId: number) => {
+  const showSeeShowMoreLink = (id: number) => (spot ? spot.id !== id : true);
+  const showRecommendationDetails = spot && isLocationDetailsOpen;
+  const handleSpotSelection = (spot: Spot) => {
     setIsLocationDetailsOpen(true);
-    setSpotId(spotId);
+    setSpot(spot);
   };
   const handleRecommendationDetailsClose = () => {
     setIsLocationDetailsOpen(false);
-    setSpotId(null);
+    setSpot(null);
   };
 
   const { region: location } = useParams();
@@ -77,7 +77,7 @@ const RegionalRecommendations: React.FC = () => {
               <Box animation="fadeIn">
                 <TimeWindows
                   handleCloseButton={handleRecommendationDetailsClose}
-                  spotId={spotId}
+                  spot={spot}
                 />
               </Box>
             )}
@@ -92,7 +92,7 @@ const RegionalRecommendations: React.FC = () => {
             >
               <TimeWindows
                 handleCloseButton={handleRecommendationDetailsClose}
-                spotId={spotId}
+                spot={spot}
               />
             </Layer>
           )}

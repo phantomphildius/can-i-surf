@@ -60,7 +60,7 @@ describe('Recommendation', () => {
 
       userEvent.click(seeMoreButton);
 
-      expect(spotHandler).toHaveBeenCalledWith(4567);
+      expect(spotHandler).toHaveBeenCalledWith({ id: 4567, name: 'The bu' });
     });
   });
 

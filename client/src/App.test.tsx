@@ -3,6 +3,8 @@ import { Grommet } from 'grommet';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 
+// TODO integration test
+
 const subject = () =>
   render(
     <Grommet plain>

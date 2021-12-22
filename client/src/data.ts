@@ -6,6 +6,11 @@ export interface Recommendation {
   locationName: string;
 }
 
+export interface Spot {
+  id: number;
+  name: string;
+}
+
 export interface ApiResponse<T> {
   loading: boolean;
   data: T | undefined;

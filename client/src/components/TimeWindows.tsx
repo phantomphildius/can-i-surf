@@ -3,19 +3,19 @@ import React from 'react';
 
 import Recommendation from './Recommendation';
 import { usePost, useBreakpoint } from '../hooks';
-import { Recommendation as IRecommendation } from '../data';
+import { Recommendation as IRecommendation, Spot } from '../data';
 
 const TimeWindows: React.FC<{
   handleCloseButton: () => void;
-  spotId: number;
-}> = ({ handleCloseButton, spotId }) => {
+  spot: Spot;
+}> = ({ handleCloseButton, spot }) => {
   const {
     data: timeWindows,
     loading,
     errors,
   } = usePost<{ spotId: number }, IRecommendation[]>(
     '/recommendations/window',
-    { spotId }
+    { spotId: spot.id }
   );
 
   const size = useBreakpoint();
@@ -30,7 +30,6 @@ const TimeWindows: React.FC<{
       </>
     );
   }
-
   return (
     <>
       <Box
@@ -39,7 +38,12 @@ const TimeWindows: React.FC<{
         justify="between"
         pad={{ horizontal: 'medium' }}
       >
-        <Heading level={isLargeScreen ? '3' : '2'}>Secret Spot</Heading>
+        <Heading
+          data-testid={`details-header-${spot.name}`}
+          level={isLargeScreen ? '3' : '2'}
+        >
+          {isLargeScreen ? 'Other time windows' : spot.name}
+        </Heading>
         <Box alignSelf="center">
           <Button onClick={() => handleCloseButton()}>X</Button>
         </Box>

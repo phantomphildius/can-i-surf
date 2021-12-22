@@ -12,7 +12,10 @@ const handleClose = jest.fn();
 const subject = () =>
   render(
     <Grommet plain>
-      <TimeWindows spotId={846} handleCloseButton={handleClose} />
+      <TimeWindows
+        spot={{ id: 846, name: 'Second Beach' }}
+        handleCloseButton={handleClose}
+      />
     </Grommet>
   );
 
@@ -94,6 +97,9 @@ describe('TimeWindows', () => {
 
     it('renders the returned recommendations', () => {
       subject();
+
+      const header = screen.getByRole('heading');
+      expect(header).toHaveTextContent('Other time windows'); // TODO: responsive tests
 
       const recommendations = screen.getAllByTestId('recommendation', {
         exact: false,
