@@ -42,6 +42,8 @@ const Intro: React.FC = () => {
       >
         <RegionalLink name="Rhode Island" slug="rhode-island" />
         <RegionalLink name="Hamptons" slug="hamptons" />
+        <RegionalLink name="New York City" slug="new-york-city" />
+        <RegionalLink name="New Jersey" slug="new-jersey" />
       </Box>
     </>
   );
