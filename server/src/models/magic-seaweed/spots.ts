@@ -29,6 +29,23 @@ const spotMap: Record<string, Record<string, string>> = {
     '2161': 'Turtle Cove',
     '4876': 'West Dune Road',
   },
+  newYorkCity: {
+    '4867': 'Breezy Point',
+    '7947': 'Long Branch',
+    '384': 'Rockaway',
+    '383': 'Long Beach',
+    '2162': 'Jones Beach State Park',
+    '381': 'Robert Moses State Park',
+  },
+  newJersey: {
+    '4050': 'Avon',
+    '4055': 'Monmouth',
+    '385': 'Sandy Hook',
+    '857': 'Asbury Park',
+    '7944': 'Bradley Beach',
+    '3683': 'Belmar',
+    '7941': 'Spring Lake',
+  },
 };
 
 export default spotMap;
