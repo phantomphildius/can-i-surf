@@ -40,11 +40,11 @@ const Recommendation: React.FC<Props> = ({
         </CardHeader>
       )}
       <CardBody>
-        <Paragraph>
+        <Paragraph fill>
           On {unixTimeToDisplayTime(time)} the swell will be {swell.height} feet
           coming from the {swell.direction} @ {swell.period} seconds.
         </Paragraph>
-        <Paragraph>
+        <Paragraph fill>
           The wind will be {wind.speed} MPH from the {wind.direction}.
         </Paragraph>
       </CardBody>
