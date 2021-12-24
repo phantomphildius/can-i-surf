@@ -1,7 +1,7 @@
 import React from 'react';
 import dayjs from 'dayjs';
-import { Link } from 'react-router-dom';
 import {
+  Button,
   Card,
   CardBody,
   CardFooter,
@@ -10,11 +10,12 @@ import {
   Paragraph,
 } from 'grommet';
 
-import { Recommendation as IRecommendation } from '../data';
+import { Recommendation as IRecommendation, Spot } from '../data';
 export interface Props extends Omit<IRecommendation, 'locationName'> {
   id: number;
   locationName?: string;
   showSeeMoreLink: boolean;
+  handleSpotSelection?: (spot: Spot) => void;
 }
 
 export const unixTimeToDisplayTime = (unixTimeStamp: number): string => {
@@ -23,15 +24,16 @@ export const unixTimeToDisplayTime = (unixTimeStamp: number): string => {
 };
 
 const Recommendation: React.FC<Props> = ({
+  id,
   time,
   locationName,
-  id,
-  showSeeMoreLink,
   swell,
   wind,
+  showSeeMoreLink,
+  handleSpotSelection,
 }) => {
   return (
-    <Card pad="medium" data-testid={`recommendation-${locationName}`}>
+    <Card pad="medium" data-testid={`recommendation-${locationName || time}`}>
       {locationName && (
         <CardHeader>
           <Heading level="3">{locationName}</Heading>
@@ -46,9 +48,15 @@ const Recommendation: React.FC<Props> = ({
           The wind will be {wind.speed} MPH from the {wind.direction}.
         </Paragraph>
       </CardBody>
-      {showSeeMoreLink && (
+      {showSeeMoreLink && handleSpotSelection && (
         <CardFooter>
-          <Link to={`${id}`}>See more</Link>
+          <Button
+            onClick={() =>
+              handleSpotSelection({ id, name: locationName as string })
+            }
+          >
+            See more
+          </Button>
         </CardFooter>
       )}
     </Card>

@@ -1,26 +1,25 @@
-import { Box, Heading } from 'grommet';
+import { Box, Button, Heading } from 'grommet';
 import React from 'react';
-import { useParams, Link } from 'react-router-dom';
 
 import Recommendation from './Recommendation';
 import { usePost, useBreakpoint } from '../hooks';
-import { Recommendation as IRecommendation } from '../data';
+import { Recommendation as IRecommendation, Spot } from '../data';
 
-const TimeWindows: React.FC = () => {
-  const { spotId } = useParams();
-
+const TimeWindows: React.FC<{
+  handleCloseButton: () => void;
+  spot: Spot;
+}> = ({ handleCloseButton, spot }) => {
   const {
     data: timeWindows,
     loading,
     errors,
-  } = usePost<{ spotId: string }, IRecommendation[]>(
+  } = usePost<{ spotId: number }, IRecommendation[]>(
     '/recommendations/window',
-    // @ts-ignore
-    { spotId }
+    { spotId: spot.id }
   );
 
   const size = useBreakpoint();
-  const isLargeScreen = size !== 'large';
+  const isNotLargeScreen = size !== 'large';
 
   const Loader: React.FC = () => <Heading level="2">Building....</Heading>;
 
@@ -31,7 +30,6 @@ const TimeWindows: React.FC = () => {
       </>
     );
   }
-
   return (
     <>
       <Box
@@ -40,11 +38,14 @@ const TimeWindows: React.FC = () => {
         justify="between"
         pad={{ horizontal: 'medium' }}
       >
-        <Heading level={isLargeScreen ? '3' : '2'}>Secret Spot</Heading>
+        <Heading
+          data-testid={`details-header-${spot.name}`}
+          level={isNotLargeScreen ? '2' : '4'}
+        >
+          {isNotLargeScreen ? spot.name : 'Other time windows'}
+        </Heading>
         <Box alignSelf="center">
-          <Link to=".." style={{ textDecoration: 'none', color: 'black' }}>
-            X
-          </Link>
+          <Button onClick={() => handleCloseButton()}>X</Button>
         </Box>
       </Box>
       {timeWindows && !errors ? (
