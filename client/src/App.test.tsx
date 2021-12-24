@@ -14,7 +14,7 @@ const subject = () =>
     </Grommet>
   );
 
-test('renders learn react link', () => {
+test.skip('renders learn react link', () => {
   subject();
   expect(screen.getByText('Can I Surf?')).toBeInTheDocument();
 });

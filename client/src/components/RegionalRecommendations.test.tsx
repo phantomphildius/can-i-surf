@@ -16,6 +16,10 @@ jest.mock('react-router', () => ({
   }),
 }));
 
+afterEach(() => {
+  jest.restoreAllMocks();
+});
+
 const subject = () =>
   render(
     <Grommet plain>
