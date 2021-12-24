@@ -33,3 +33,7 @@ export interface ApiError {
   status: number;
   details: string;
 }
+
+export type Location = {
+  [slug: string]: string;
+};

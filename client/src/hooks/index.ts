@@ -1,4 +1,5 @@
 import { usePost } from './usePost';
 import { useBreakpoint } from './useBreakpoint';
+import { useFetch } from './useFetch';
 
-export { useBreakpoint, usePost };
+export { useBreakpoint, useFetch, usePost };

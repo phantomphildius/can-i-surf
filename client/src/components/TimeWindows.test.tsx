@@ -20,6 +20,10 @@ const subject = () =>
     </Grommet>
   );
 
+afterEach(() => {
+  jest.restoreAllMocks();
+});
+
 describe('TimeWindows', () => {
   describe('when the component is loading data', () => {
     beforeEach(() => {
