@@ -1,3 +1,6 @@
+import kebabCase from 'lodash.kebabcase';
+import capitalize from 'lodash.capitalize';
+
 const spotMap: Record<string, Record<string, string>> = {
   rhodeIsland: {
     '846': 'Second Beach',
@@ -49,3 +52,15 @@ const spotMap: Record<string, Record<string, string>> = {
 };
 
 export default spotMap;
+
+export const getLocations = (): Array<Record<string, string>> => {
+  return Object.keys(spotMap).map((location) => ({
+    [location]: titleizeLocation(location),
+  }));
+};
+
+const titleizeLocation = (location: string): string =>
+  kebabCase(location)
+    .split('-')
+    .map((locale) => capitalize(locale))
+    .join(' ');
