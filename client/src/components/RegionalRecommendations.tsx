@@ -89,6 +89,7 @@ const RegionalRecommendations: React.FC = () => {
               animation="fadeIn"
               onEsc={() => handleRecommendationDetailsClose()}
               onClickOutside={() => handleRecommendationDetailsClose()}
+              role="dialog"
             >
               <TimeWindows
                 handleCloseButton={handleRecommendationDetailsClose}

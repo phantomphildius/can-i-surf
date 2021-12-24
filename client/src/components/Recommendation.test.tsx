@@ -95,8 +95,8 @@ describe('Recommendation', () => {
         screen.getByText('The wind will be 11 MPH from the SW.')
       ).toBeInTheDocument();
 
-      expect(screen.queryByRole('link')).toBeNull();
-      expect(screen.queryByText('See more')).toBeNull();
+      expect(screen.queryByRole('link')).not.toBeInTheDocument();
+      expect(screen.queryByText('See more')).not.toBeInTheDocument();
     });
   });
 
@@ -119,7 +119,7 @@ describe('Recommendation', () => {
 
       subject(reco);
 
-      expect(screen.queryByRole('heading')).toBeNull();
+      expect(screen.queryByRole('heading')).not.toBeInTheDocument();
       expect(
         screen.getByText(
           'On Tue at 07:00 pm the swell will be 5 feet coming from the S @ 12 seconds.'
@@ -129,7 +129,7 @@ describe('Recommendation', () => {
         screen.getByText('The wind will be 11 MPH from the SW.')
       ).toBeInTheDocument();
 
-      expect(screen.queryByRole('link')).toBeNull();
+      expect(screen.queryByRole('link')).not.toBeInTheDocument();
     });
   });
 });

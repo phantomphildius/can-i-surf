@@ -4,10 +4,11 @@ import { Grommet } from 'grommet';
 import { when } from 'jest-when';
 
 import RegionalRecommendations from './RegionalRecommendations';
-import { usePost } from '../hooks';
+import { usePost, useBreakpoint } from '../hooks';
 import userEvent from '@testing-library/user-event';
 
 jest.mock('../hooks/usePost');
+jest.mock('../hooks/useBreakpoint');
 jest.mock('react-router', () => ({
   ...jest.requireActual('react-router'),
   useParams: () => ({
@@ -137,7 +138,7 @@ describe('RegionalRecommendations', () => {
       expect(recommendations[1]).toHaveTextContent('Rockies');
     });
 
-    it('displays more details when a recommendation is chosen', () => {
+    it('displays more details when a recommendation is chosen as a modal', async function () {
       subject();
 
       const bestRecommendation = screen.getByTestId('recommendation-Pipe');
@@ -147,12 +148,32 @@ describe('RegionalRecommendations', () => {
 
       userEvent.click(seeMoreButton);
 
-      const detailsHeader = screen.getByTestId('details-header-pipe');
+      const detailsHeader = await screen.findByTestId('details-header-Pipe');
       expect(detailsHeader).toHaveTextContent('Pipe');
 
-      const timeWindows = screen.getAllByTestId('recommendation-');
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+
+      const timeWindows = screen.getAllByTestId('recommendation-1621983600');
 
       expect(timeWindows.length).toEqual(1);
+    });
+
+    describe('when on a large screen', () => {
+      beforeEach(() => {
+        when(useBreakpoint).calledWith().mockReturnValue('large');
+      });
+
+      it('displays the details section as a new column', async function () {
+        subject();
+
+        const bestRecommendation = screen.getByTestId('recommendation-Pipe');
+        const seeMoreButton = within(bestRecommendation).getByRole('button');
+
+        userEvent.click(seeMoreButton);
+
+        const header = await screen.findByRole('heading', { level: 4 });
+        expect(header).toHaveTextContent('Other time windows');
+      });
     });
   });
 });

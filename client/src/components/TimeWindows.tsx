@@ -19,7 +19,7 @@ const TimeWindows: React.FC<{
   );
 
   const size = useBreakpoint();
-  const isLargeScreen = size !== 'large';
+  const isNotLargeScreen = size !== 'large';
 
   const Loader: React.FC = () => <Heading level="2">Building....</Heading>;
 
@@ -40,9 +40,9 @@ const TimeWindows: React.FC<{
       >
         <Heading
           data-testid={`details-header-${spot.name}`}
-          level={isLargeScreen ? '3' : '2'}
+          level={isNotLargeScreen ? '2' : '4'}
         >
-          {isLargeScreen ? 'Other time windows' : spot.name}
+          {isNotLargeScreen ? spot.name : 'Other time windows'}
         </Heading>
         <Box alignSelf="center">
           <Button onClick={() => handleCloseButton()}>X</Button>

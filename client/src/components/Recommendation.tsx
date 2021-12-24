@@ -33,7 +33,7 @@ const Recommendation: React.FC<Props> = ({
   handleSpotSelection,
 }) => {
   return (
-    <Card pad="medium" data-testid={`recommendation-${locationName}`}>
+    <Card pad="medium" data-testid={`recommendation-${locationName || time}`}>
       {locationName && (
         <CardHeader>
           <Heading level="3">{locationName}</Heading>

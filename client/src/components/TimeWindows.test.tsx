@@ -4,9 +4,10 @@ import { Grommet } from 'grommet';
 import { when } from 'jest-when';
 
 import TimeWindows from './TimeWindows';
-import { usePost } from '../hooks';
+import { useBreakpoint, usePost } from '../hooks';
 
 jest.mock('../hooks/usePost');
+jest.mock('../hooks/useBreakpoint');
 
 const handleClose = jest.fn();
 const subject = () =>
@@ -99,7 +100,7 @@ describe('TimeWindows', () => {
       subject();
 
       const header = screen.getByRole('heading');
-      expect(header).toHaveTextContent('Other time windows'); // TODO: responsive tests
+      expect(header).toHaveTextContent('Second Beach');
 
       const recommendations = screen.getAllByTestId('recommendation', {
         exact: false,
@@ -117,7 +118,7 @@ describe('TimeWindows', () => {
         'On Tue at 07:03 pm the swell will be 4.2 feet coming from the SSE @ 7 seconds.The wind will be 14 MPH from the SE.'
       );
 
-      expect(screen.queryByText('See more')).toBeNull();
+      expect(screen.queryByText('See more')).not.toBeInTheDocument();
     });
 
     it('handles the close button click appropriately', () => {
@@ -127,6 +128,19 @@ describe('TimeWindows', () => {
       userEvent.click(closeButton);
 
       expect(handleClose).toHaveBeenCalled();
+    });
+
+    describe('when on a large screen', () => {
+      beforeEach(() => {
+        when(useBreakpoint).calledWith().mockReturnValue('large');
+      });
+
+      it('displays the generic heading', () => {
+        subject();
+
+        const header = screen.getByRole('heading');
+        expect(header).toHaveTextContent('Other time windows');
+      });
     });
   });
 });
