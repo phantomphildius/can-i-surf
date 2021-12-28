@@ -39,6 +39,6 @@
     "build": "yarn clear && yarn install && yarn compile",
     "start-dev": "nodemon ./src/app.ts",
     "start": "node ./dist/app.js",
-    "test": "jest --watch"
+    "test": "jest"
   }
 }
