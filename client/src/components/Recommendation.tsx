@@ -1,6 +1,7 @@
 import React from 'react';
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
+import utc from 'dayjs/plugin/utc';
 import {
   Button,
   Card,
@@ -11,6 +12,9 @@ import {
   Paragraph,
 } from 'grommet';
 
+dayjs.extend(timezone);
+dayjs.extend(utc);
+
 import { Recommendation as IRecommendation, Spot } from '../data';
 export interface Props extends Omit<IRecommendation, 'locationName'> {
   id: number;
@@ -20,8 +24,7 @@ export interface Props extends Omit<IRecommendation, 'locationName'> {
 }
 
 export const unixTimeToDisplayTime = (unixTimeStamp: number): string => {
-  dayjs.extend(timezone);
-  const dateObject = dayjs(unixTimeStamp * 1000, 'America/New_York');
+  const dateObject = dayjs.tz(unixTimeStamp * 1000, 'America/New_York');
   return `${dateObject.format('ddd')} at ${dateObject.format('hh:mm a')}`;
 };
 
