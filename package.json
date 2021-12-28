@@ -2,7 +2,7 @@
   "private": true,
   "workspaces": ["client", "server"],
   "engines": {
-    "node": ">= 14.0.0 <16.0.0",
+    "node": ">= 14.0.0 <= 16.13.1",
     "yarn": "1.x"
   },
   "scripts": {

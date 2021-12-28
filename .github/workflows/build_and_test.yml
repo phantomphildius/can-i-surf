@@ -1,7 +1,4 @@
-# This workflow will do a clean install of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
-
-name: Node.js CI
+name: Build and Test
 
 on:
   push:
@@ -25,9 +22,6 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'yarn'
-    - name: install dependancies
-      run: yarn
-    - name: server tests
-      run: cd server && yarn test
-    - name: client tests
-      run: cd client && yarn test
+    - run: yarn install
+    - run: cd server && yarn test
+    - run: cd client && yarn test
