@@ -2,12 +2,12 @@
   "compilerOptions": {
     "target": "es2020",
     "module": "commonjs",
-    "outDir": "dist/js",
+    "outDir": "dist/",
     "rootDir": "src",
     "strict": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true
   },
   "include": ["src/**/*"],
-  "exclude": ["src/types/*.ts", "node_modules", ".vscode", "tests/**/*"]
+  "exclude": ["src/types/*.ts", "node_modules", ".vscode", "src/testing/*", "src/**/*.test.ts"]
 }
