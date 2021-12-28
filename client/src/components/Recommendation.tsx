@@ -1,5 +1,6 @@
 import React from 'react';
 import dayjs from 'dayjs';
+import timezone from 'dayjs/plugin/timezone';
 import {
   Button,
   Card,
@@ -19,7 +20,8 @@ export interface Props extends Omit<IRecommendation, 'locationName'> {
 }
 
 export const unixTimeToDisplayTime = (unixTimeStamp: number): string => {
-  const dateObject = dayjs(unixTimeStamp * 1000);
+  dayjs.extend(timezone);
+  const dateObject = dayjs(unixTimeStamp * 1000, 'America/New_York');
   return `${dateObject.format('ddd')} at ${dateObject.format('hh:mm a')}`;
 };
 
