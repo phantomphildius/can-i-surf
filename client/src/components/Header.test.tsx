@@ -15,9 +15,8 @@ describe('Header', () => {
     it('renders the region name', () => {
       subject('rhodeIsland');
 
-      expect(
-        screen.getByText('Can I Surf in Rhode Island?')
-      ).toBeInTheDocument();
+      expect(screen.getByText('Can I Surf')).toBeInTheDocument();
+      expect(screen.getByText('in Rhode Island?')).toBeInTheDocument();
     });
   });
 
@@ -25,7 +24,7 @@ describe('Header', () => {
     it('does not render with the region name', () => {
       subject();
 
-      expect(screen.getByText(/Can I Surf?/)).toBeInTheDocument();
+      expect(screen.getByText(/Can I Surf\?/)).toBeInTheDocument();
     });
   });
 });

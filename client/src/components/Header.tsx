@@ -19,8 +19,11 @@ const Header: React.FC<{ region?: string }> = ({ region }) => {
       justify="between"
       pad="small"
     >
-      <Box tag="span">
-        Can I Surf{region && ` in ${humanReadableString(region)}`}?
+      <Box tag="span" direction="row">
+        <Link to="/" style={{ textDecoration: 'none', color: '#faf9f6' }}>
+          Can I Surf{!region && '?'}&nbsp;
+        </Link>{' '}
+        {region && `in ${humanReadableString(region)}?`}
       </Box>
       <Box tag="span">
         <Link to="/about" style={{ textDecoration: 'none', color: '#faf9f6' }}>

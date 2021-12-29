@@ -32,14 +32,16 @@ describe('Home', () => {
       });
     });
 
-    it('renders the title with loading state', async () => {
+    it('renders the title with loading state', () => {
       subject();
 
       expect(screen.getByText('Loading locations')).toBeInTheDocument();
-      const link = await screen.getByRole('link');
-      expect(link).toBeInTheDocument();
-      expect(link).toHaveTextContent('About');
-      expect(link).toHaveAttribute('href', '/about');
+      const links = screen.getAllByRole('link');
+      expect(links.length).toEqual(2);
+      expect(links[0]).toHaveTextContent('Can I Surf?');
+      expect(links[0]).toHaveAttribute('href', '/');
+      expect(links[1]).toHaveTextContent('About');
+      expect(links[1]).toHaveAttribute('href', '/about');
     });
   });
 
