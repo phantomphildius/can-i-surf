@@ -69,6 +69,14 @@ const theme: ThemeType = {
       },
     },
   },
+  list: {
+    item: {
+      border: {
+        color: 'navy',
+        side: 'left',
+      },
+    },
+  },
 } as const;
 
 export default theme;
