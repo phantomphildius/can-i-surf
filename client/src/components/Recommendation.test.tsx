@@ -12,7 +12,7 @@ const subject = (recommendation: Props) =>
   );
 
 describe('Recommendation', () => {
-  describe('when the recommendation is provided with a name and show more link flag', () => {
+  describe('when the recommendation is provided with a name and selection handler', () => {
     const spotHandler = jest.fn();
     const reco = {
       swell: {
@@ -27,11 +27,11 @@ describe('Recommendation', () => {
       time: 1621983600,
       locationName: 'The bu',
       id: 4567,
-      showSeeMoreLink: true,
+      isActive: false,
       handleSpotSelection: spotHandler,
     };
 
-    it('renders a surf location recommendation including a time and forecast with a heading and link', () => {
+    it('renders a surf location recommendation including a time and forecast with a heading and button', () => {
       subject(reco);
 
       expect(screen.getByRole('heading')).toBeInTheDocument();
@@ -64,7 +64,7 @@ describe('Recommendation', () => {
     });
   });
 
-  describe('when the recommendation is provided with a name and no show more link flag', () => {
+  describe('when the recommendation is provided with a name and no selection handler', () => {
     it('renders a surf location recommendation including a time and forecast with a heading', () => {
       const reco = {
         swell: {
@@ -79,7 +79,7 @@ describe('Recommendation', () => {
         time: 1621983600,
         locationName: 'The bu',
         id: 4567,
-        showSeeMoreLink: false,
+        isActive: false,
       };
 
       subject(reco);
@@ -95,12 +95,12 @@ describe('Recommendation', () => {
         screen.getByText('The wind will be 11 MPH from the SW.')
       ).toBeInTheDocument();
 
-      expect(screen.queryByRole('link')).not.toBeInTheDocument();
+      expect(screen.queryByRole('button')).not.toBeInTheDocument();
       expect(screen.queryByText('See more')).not.toBeInTheDocument();
     });
   });
 
-  describe('when the recommendation is provided without a name and show more link flag', () => {
+  describe('when the recommendation is provided without a name and selection handler', () => {
     it('renders a surf location recommendation including a time and forecast', () => {
       const reco = {
         swell: {
@@ -114,7 +114,7 @@ describe('Recommendation', () => {
         },
         time: 1621983600,
         id: 4567,
-        showSeeMoreLink: false,
+        isActive: false,
       };
 
       subject(reco);
@@ -129,7 +129,7 @@ describe('Recommendation', () => {
         screen.getByText('The wind will be 11 MPH from the SW.')
       ).toBeInTheDocument();
 
-      expect(screen.queryByRole('link')).not.toBeInTheDocument();
+      expect(screen.queryByRole('button')).not.toBeInTheDocument();
     });
   });
 });

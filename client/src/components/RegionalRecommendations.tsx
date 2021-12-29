@@ -18,7 +18,6 @@ const RegionalRecommendations: React.FC = () => {
   const size = useBreakpoint();
   const isLargeScreen = size === 'large';
 
-  const showSeeShowMoreLink = (id: number) => (spot ? spot.id !== id : true);
   const showRecommendationDetails = spot && isLocationDetailsOpen;
   const handleSpotSelection = (spot: Spot) => {
     setIsLocationDetailsOpen(true);
@@ -51,14 +50,15 @@ const RegionalRecommendations: React.FC = () => {
   }
 
   return (
-    <>
+    <Box fill="horizontal">
       <Header region={location} />
-      <Heading level="2">Best bets are</Heading>
+      <Box pad={{ left: 'medium' }}>
+        <Heading level="2">Best bets are</Heading>
+      </Box>
       {recommendations && !errors ? (
-        <>
+        <Box tag="section">
           <Box direction="row-responsive" gap="xlarge">
             <Box
-              tag="section"
               justify="center"
               gap="medium"
               pad="medium"
@@ -67,8 +67,8 @@ const RegionalRecommendations: React.FC = () => {
               {recommendations.map((rec) => (
                 <Recommendation
                   key={rec.id}
-                  showSeeMoreLink={showSeeShowMoreLink(rec.id)}
                   handleSpotSelection={handleSpotSelection}
+                  isActive={!!(spot?.id && spot.id === rec.id)}
                   {...rec}
                 />
               ))}
@@ -85,7 +85,7 @@ const RegionalRecommendations: React.FC = () => {
           {!isLargeScreen && showRecommendationDetails && (
             <Layer
               full
-              background="salmon"
+              background="aqua"
               animation="fadeIn"
               onEsc={() => handleRecommendationDetailsClose()}
               onClickOutside={() => handleRecommendationDetailsClose()}
@@ -97,14 +97,14 @@ const RegionalRecommendations: React.FC = () => {
               />
             </Layer>
           )}
-        </>
+        </Box>
       ) : (
         <>
           <h3>Guess not! Bummer dude</h3>
           <p>{errors?.details}</p>
         </>
       )}
-    </>
+    </Box>
   );
 };
 

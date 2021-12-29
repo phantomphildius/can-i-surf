@@ -143,7 +143,7 @@ describe('TimeWindows', () => {
         subject();
 
         const header = screen.getByRole('heading');
-        expect(header).toHaveTextContent('Other time windows');
+        expect(header).toHaveTextContent('Other time windows at Second Beach');
       });
     });
   });

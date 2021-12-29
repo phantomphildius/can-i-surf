@@ -4,10 +4,11 @@ import { Grommet, Main } from 'grommet';
 
 import Home from './components/Home';
 import RegionalRecommendations from './components/RegionalRecommendations';
+import theme from './theme';
 
 const App: React.FC = () => {
   return (
-    <Grommet plain>
+    <Grommet theme={theme}>
       <Main>
         <Routes>
           <Route path="/" element={<Home />} />

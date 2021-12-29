@@ -12,14 +12,15 @@ import {
   Paragraph,
 } from 'grommet';
 
+import { Recommendation as IRecommendation, Spot } from '../data';
+import { useBreakpoint } from '../hooks';
+
 dayjs.extend(timezone);
 dayjs.extend(utc);
-
-import { Recommendation as IRecommendation, Spot } from '../data';
 export interface Props extends Omit<IRecommendation, 'locationName'> {
   id: number;
   locationName?: string;
-  showSeeMoreLink: boolean;
+  isActive: boolean;
   handleSpotSelection?: (spot: Spot) => void;
 }
 
@@ -34,11 +35,19 @@ const Recommendation: React.FC<Props> = ({
   locationName,
   swell,
   wind,
-  showSeeMoreLink,
+  isActive,
   handleSpotSelection,
 }) => {
+  const size = useBreakpoint();
+  const isNotLargeScreen = size !== 'large';
+
   return (
-    <Card pad="medium" data-testid={`recommendation-${locationName || time}`}>
+    <Card
+      pad={{ horizontal: 'medium', bottom: 'medium' }}
+      data-testid={`recommendation-${locationName || time}`}
+      border={{ color: 'navy' }}
+      background="cream"
+    >
       {locationName && (
         <CardHeader>
           <Heading level="3">{locationName}</Heading>
@@ -53,15 +62,17 @@ const Recommendation: React.FC<Props> = ({
           The wind will be {wind.speed} MPH from the {wind.direction}.
         </Paragraph>
       </CardBody>
-      {showSeeMoreLink && handleSpotSelection && (
+      {handleSpotSelection && (
         <CardFooter>
           <Button
-            onClick={() =>
-              handleSpotSelection({ id, name: locationName as string })
-            }
-          >
-            See more
-          </Button>
+            fill={isNotLargeScreen && 'horizontal'}
+            primary
+            active={isActive}
+            onClick={() => {
+              handleSpotSelection({ id, name: locationName as string });
+            }}
+            label="See more"
+          />
         </CardFooter>
       )}
     </Card>
