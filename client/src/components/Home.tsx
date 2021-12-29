@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Box, Card, CardBody, Heading } from 'grommet';
+import { Box, Button, Card, CardBody, Heading } from 'grommet';
 
 import Header from './Header';
 import { useBreakpoint, useFetch } from '../hooks';
@@ -16,18 +16,20 @@ const LocationLink: React.FC<{ linkObject: Record<string, string> }> = ({
       to={`/spots/${slug}`}
       style={{ textDecoration: 'none', color: 'black' }}
     >
-      <Card pad={{ horizontal: 'large' }}>
-        <CardBody justify="center">
-          <Heading level="3" alignSelf="center">
-            {name}
-          </Heading>
-        </CardBody>
-      </Card>
+      <Button>
+        <Card pad={{ horizontal: 'large' }} background="navy">
+          <CardBody justify="center">
+            <Heading level="3" alignSelf="center">
+              {name}
+            </Heading>
+          </CardBody>
+        </Card>
+      </Button>
     </Link>
   );
 };
 
-const Intro: React.FC = () => {
+const Home: React.FC = () => {
   const size = useBreakpoint();
   const { loading, data: locations } = useFetch<Location[]>(
     '/recommendations/locations'
@@ -60,4 +62,4 @@ const Intro: React.FC = () => {
   );
 };
 
-export default Intro;
+export default Home;

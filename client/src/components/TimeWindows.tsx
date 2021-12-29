@@ -42,7 +42,7 @@ const TimeWindows: React.FC<{
           data-testid={`details-header-${spot.name}`}
           level={isNotLargeScreen ? '2' : '4'}
         >
-          {isNotLargeScreen ? spot.name : 'Other time windows'}
+          {!isNotLargeScreen && 'Other time windows at '} {spot.name}
         </Heading>
         <Box alignSelf="center">
           <Button onClick={() => handleCloseButton()}>X</Button>
@@ -51,7 +51,7 @@ const TimeWindows: React.FC<{
       {timeWindows && !errors ? (
         <Box tag="section" justify="center" gap="medium" pad="medium">
           {timeWindows.map((tw) => (
-            <Recommendation key={tw.time} {...tw} showSeeMoreLink={false} />
+            <Recommendation key={tw.time} {...tw} isActive={false} />
           ))}
         </Box>
       ) : (
