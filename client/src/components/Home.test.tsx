@@ -5,12 +5,13 @@ import { Grommet } from 'grommet';
 
 import Home from './Home';
 import { useFetch } from '../hooks';
+import theme from '../theme';
 
 jest.mock('../hooks/useFetch');
 
 const subject = () =>
   render(
-    <Grommet plain>
+    <Grommet theme={theme}>
       <BrowserRouter>
         <Home />
       </BrowserRouter>
@@ -31,11 +32,14 @@ describe('Home', () => {
       });
     });
 
-    it('renders the title with loading state', () => {
+    it('renders the title with loading state', async () => {
       subject();
 
       expect(screen.getByText("Let's find out...")).toBeInTheDocument();
-      expect(screen.queryByRole('link')).not.toBeInTheDocument();
+      const link = await screen.getByRole('link');
+      expect(link).toBeInTheDocument();
+      expect(link).toHaveTextContent('About');
+      expect(link).toHaveAttribute('href', '/about');
     });
   });
 
@@ -60,10 +64,18 @@ describe('Home', () => {
       expect(
         screen.getByText("Let's find out! Choose a region to start")
       ).toBeInTheDocument();
-      expect(screen.getAllByRole('link').length).toEqual(3);
-      expect(screen.getByText('Outer Banks')).toBeInTheDocument();
-      expect(screen.getByText('North Shore')).toBeInTheDocument();
-      expect(screen.getByText('Rhode Island')).toBeInTheDocument();
+
+      const obxLink = screen.getByText('Outer Banks').closest('a');
+      expect(obxLink).toBeInTheDocument();
+      expect(obxLink).toHaveAttribute('href', '/spots/obx');
+
+      const northShoreLink = screen.getByText('North Shore').closest('a');
+      expect(northShoreLink).toBeInTheDocument();
+      expect(northShoreLink).toHaveAttribute('href', '/spots/northShore');
+
+      const rhodeyLink = screen.getByText('Rhode Island').closest('a');
+      expect(rhodeyLink).toBeInTheDocument();
+      expect(rhodeyLink).toHaveAttribute('href', '/spots/rhodeIsland');
     });
   });
 });
