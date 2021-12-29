@@ -1,4 +1,4 @@
-import { Box, Button, Heading } from 'grommet';
+import { Box, Button, Heading, Spinner } from 'grommet';
 import React from 'react';
 
 import Recommendation from './Recommendation';
@@ -21,15 +21,19 @@ const TimeWindows: React.FC<{
   const size = useBreakpoint();
   const isNotLargeScreen = size !== 'large';
 
-  const Loader: React.FC = () => <Heading level="2">Building....</Heading>;
-
   if (loading && !(timeWindows || errors)) {
     return (
-      <>
-        <Loader />
-      </>
+      <Spinner
+        message={{
+          start: 'Building time recommendations...',
+          end: 'Time windows loaded',
+        }}
+        color="salmon"
+        size="medium"
+      />
     );
   }
+
   return (
     <>
       <Box

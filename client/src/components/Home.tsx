@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Box, Card, CardBody, Heading } from 'grommet';
+import { Box, Card, CardBody, Heading, Spinner } from 'grommet';
 
 import Header from './Header';
 import { useBreakpoint, useFetch } from '../hooks';
@@ -33,11 +33,23 @@ const Home: React.FC = () => {
     '/recommendations/locations'
   );
 
+  if (loading) {
+    return (
+      <>
+        <Header />
+        <Box alignSelf="center">
+          <Spinner color="salmon" size="large" message="Loading locations" />
+        </Box>
+        ;
+      </>
+    );
+  }
+
   return (
     <>
       <Header />
       <Heading level="2" alignSelf="center">
-        Let's find out{!loading ? '! Choose a region to start' : '...'}
+        Let's find out! Choose a region to start
       </Heading>
       {locations && (
         <Box

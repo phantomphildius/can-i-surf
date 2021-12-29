@@ -18,6 +18,9 @@ const theme: ThemeType = {
       border: {
         color: 'salmon',
       },
+      outline: {
+        color: 'salmon',
+      },
     },
   },
   button: {

@@ -39,7 +39,9 @@ describe('TimeWindows', () => {
     it('renders the loader', () => {
       subject();
 
-      expect(screen.getByText('Building....')).toBeInTheDocument();
+      expect(
+        screen.getByText('Building time recommendations...')
+      ).toBeInTheDocument();
     });
   });
 

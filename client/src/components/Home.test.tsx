@@ -35,7 +35,7 @@ describe('Home', () => {
     it('renders the title with loading state', async () => {
       subject();
 
-      expect(screen.getByText("Let's find out...")).toBeInTheDocument();
+      expect(screen.getByText('Loading locations')).toBeInTheDocument();
       const link = await screen.getByRole('link');
       expect(link).toBeInTheDocument();
       expect(link).toHaveTextContent('About');

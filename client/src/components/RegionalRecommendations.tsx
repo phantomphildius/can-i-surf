@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router';
-import { Box, Heading, Layer } from 'grommet';
+import { Box, Heading, Layer, Spinner } from 'grommet';
 
 import Header from './Header';
 import Recommendation from './Recommendation';
@@ -38,14 +38,18 @@ const RegionalRecommendations: React.FC = () => {
     { location }
   );
 
-  const Loader: React.FC = () => <Heading level="2">Finding out...</Heading>;
-
   if (loading && !(recommendations || errors)) {
     return (
-      <>
+      <Box>
         <Header />
-        <Loader />
-      </>
+        <Box justify="center" align="center">
+          <Spinner
+            message={{ start: 'Finding out...', end: 'Recommendations loaded' }}
+            color="salmon"
+            size="large"
+          />
+        </Box>
+      </Box>
     );
   }
 
