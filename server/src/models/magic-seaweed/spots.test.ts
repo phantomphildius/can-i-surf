@@ -5,7 +5,7 @@ describe('Spots', () => {
     it('returns an array of formatted location objects', () => {
       expect(getLocations()).toMatchObject([
         { rhodeIsland: 'Rhode Island' },
-        { hamptons: 'Hamptons' },
+        { theHamptons: 'The Hamptons' },
         { newYorkCity: 'New York City' },
         { newJersey: 'New Jersey' },
       ]);

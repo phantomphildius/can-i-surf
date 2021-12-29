@@ -15,7 +15,7 @@ const spotMap: Record<string, Record<string, string>> = {
     '7911': 'Scarborough',
     '4058': 'Weekapaug',
   },
-  hamptons: {
+  theHamptons: {
     '2160': 'Atlantic Terrace',
     '4875': 'Coopers Beach',
     '4224': 'Cupsogue',
