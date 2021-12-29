@@ -13,10 +13,10 @@ const subject = (region?: string) =>
 describe('Header', () => {
   describe('with a surf region', () => {
     it('renders the region name', () => {
-      subject('New York City');
+      subject('rhodeIsland');
 
       expect(
-        screen.getByText('Can I Surf in New York City?')
+        screen.getByText('Can I Surf in Rhode Island?')
       ).toBeInTheDocument();
     });
   });

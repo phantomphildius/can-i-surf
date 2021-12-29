@@ -13,7 +13,7 @@ describe('getRecommendationLocations', () => {
     expect(locationResponse.status).toBeCalledWith(200);
     expect(locationResponse.json).toBeCalledWith([
       { rhodeIsland: 'Rhode Island' },
-      { hamptons: 'Hamptons' },
+      { theHamptons: 'The Hamptons' },
       { newYorkCity: 'New York City' },
       { newJersey: 'New Jersey' },
     ]);
