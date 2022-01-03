@@ -16,6 +16,8 @@ describe('getRecommendationLocations', () => {
       { theHamptons: 'The Hamptons' },
       { newYorkCity: 'New York City' },
       { newJersey: 'New Jersey' },
+      { massachusetts: 'Massachusetts' },
+      { capeAndTheIslands: 'Cape And The Islands' },
     ]);
   });
 });

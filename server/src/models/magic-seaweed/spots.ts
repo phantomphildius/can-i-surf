@@ -14,6 +14,8 @@ const spotMap: Record<string, Record<string, string>> = {
     '376': 'Point Judith',
     '7911': 'Scarborough',
     '4058': 'Weekapaug',
+    '2967': 'Little Compton',
+    '4057': 'Block Island',
   },
   theHamptons: {
     '2160': 'Atlantic Terrace',
@@ -49,6 +51,21 @@ const spotMap: Record<string, Record<string, string>> = {
     '3683': 'Belmar',
     '7941': 'Spring Lake',
   },
+  massachusetts: {
+    '1130': 'Salisbury',
+    '5860': 'Wingaersheek',
+    '370': 'Gloucester',
+    '1091': 'Nahant',
+    '371': 'Nantasket',
+    '372': 'Scicuate',
+  },
+  capeAndTheIslands: {
+    '4819': 'Nantucket',
+    '977': 'Lucy Vincent',
+    '976': 'South Beach',
+    '5867': 'Marconi',
+    '5868': 'Nauset',
+  }
 };
 
 export default spotMap;
