@@ -6,29 +6,34 @@ import Header from './Header';
 import { useBreakpoint, useFetch } from '../hooks';
 import { Location } from '../data';
 
-const LocationLink: React.FC<{ linkObject: Record<string, string> }> = ({
-  linkObject,
-}) => {
+const LocationLink: React.FC<{
+  linkObject: Record<string, string>;
+  isNotLargeScreen: boolean;
+}> = ({ linkObject, isNotLargeScreen }) => {
   const [slug, name] = Object.entries(linkObject)[0];
 
   return (
-    <Link
-      to={`/spots/${slug}`}
-      style={{ textDecoration: 'none', color: 'black' }}
-    >
-      <Card pad={{ horizontal: 'large' }} background="navy">
-        <CardBody justify="center">
-          <Heading level="3" alignSelf="center">
-            {name}
-          </Heading>
-        </CardBody>
-      </Card>
-    </Link>
+    <Box margin="small">
+      <Link to={`/spots/${slug}`} style={{ textDecoration: 'none' }}>
+        <Card
+          width={isNotLargeScreen ? '' : 'large'}
+          pad={{ horizontal: 'large' }}
+          background="navy"
+        >
+          <CardBody justify="center">
+            <Heading level="3" alignSelf="center">
+              {name}
+            </Heading>
+          </CardBody>
+        </Card>
+      </Link>
+    </Box>
   );
 };
 
 const Home: React.FC = () => {
   const size = useBreakpoint();
+  const isNotLargeScreen = size !== 'large';
   const { loading, data: locations } = useFetch<Location[]>(
     '/recommendations/locations'
   );
@@ -54,14 +59,14 @@ const Home: React.FC = () => {
       {locations && (
         <Box
           tag="section"
-          direction={size !== 'large' ? 'column' : 'row'}
-          justify="center"
-          gap="medium"
-          fill="horizontal"
+          direction={isNotLargeScreen ? 'column' : 'row'}
+          justify="between"
           pad="medium"
+          wrap
         >
           {locations.map((location) => (
             <LocationLink
+              isNotLargeScreen={isNotLargeScreen}
               linkObject={location}
               key={Object.keys(location)[0]}
             />
