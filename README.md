@@ -1,4 +1,4 @@
-# can i surf?
+# [can i surf?](http://can-i-surf.herokuapp.com/)
 
 An application designed to answer a simple question many desk jockeys ask themselves daily, "Can I surf today?". This app intends to solve this by allowing a user to select where they are and their available time window for that day and receive a few best bets given the parameters. Along with those best bets, you will see a more detailed time based forecast for thee chosen location. Ideally this takes most of the guess work out of deciding when and where to surf for those poor souls who only have a few minutes to get in the water. For ease of access, this will be designed with a mobile browser in mind. That being said, I don't intend to share this out too much to avoid crowding spots.
 
