@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router';
-import { Box, Heading, Layer, Spinner } from 'grommet';
+import { Box, Heading, Layer, Paragraph, Spinner } from 'grommet';
 
 import Header from './Header';
 import Recommendation from './Recommendation';
@@ -38,7 +38,7 @@ const RegionalRecommendations: React.FC = () => {
     { location }
   );
 
-  if (loading && !(recommendations || errors)) {
+  if (loading && !errors) {
     return (
       <Box>
         <Header />
@@ -58,9 +58,11 @@ const RegionalRecommendations: React.FC = () => {
       <Header region={location} />
       <Box fill="horizontal">
         <Box pad={{ left: 'medium' }}>
-          <Heading level="2">Best bets are</Heading>
+          <Heading level="2">
+            Best bets are{!recommendations?.length && ' non existent'}
+          </Heading>
         </Box>
-        {recommendations && !errors ? (
+        {recommendations?.length && !errors ? (
           <Box tag="section">
             <Box direction="row-responsive" gap="xlarge">
               <Box
@@ -104,10 +106,14 @@ const RegionalRecommendations: React.FC = () => {
             )}
           </Box>
         ) : (
-          <>
-            <h3>Guess not! Bummer dude</h3>
-            <p>{errors?.details}</p>
-          </>
+          <Box tag="section" pad="medium">
+            <Heading level="3">
+              Guess you're not going surfing today! Bummer.
+            </Heading>
+            <Paragraph>
+              {errors?.details ?? 'Hopefully the drought ends soon'}
+            </Paragraph>
+          </Box>
         )}
       </Box>
     </>
