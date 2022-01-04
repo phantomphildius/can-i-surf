@@ -1,6 +1,9 @@
 {
   "private": true,
-  "workspaces": ["client", "server"],
+  "workspaces": [
+    "client",
+    "server"
+  ],
   "engines": {
     "node": "^14 || ^16",
     "yarn": "1.x"
