@@ -18,6 +18,15 @@ jest.mock('./magic-seaweed/spots', () => ({
   },
 }));
 
+beforeEach(() => {
+  jest.useFakeTimers();
+  jest.setSystemTime(new Date('2021-05-01'));
+});
+
+afterEach(() => {
+  jest.useRealTimers();
+});
+
 describe('Recommendation', () => {
   describe('#getBestBetLocations', () => {
     beforeEach(() => {

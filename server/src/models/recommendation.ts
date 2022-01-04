@@ -1,6 +1,6 @@
 import spotMap from './magic-seaweed/spots';
 import { getRemoteForecast } from './magic-seaweed/api';
-import { sortForecasts } from './forecast';
+import { isPastForecast, sortForecasts } from './forecast';
 import { Forecast, MagicSeaweedApiError } from '../types/';
 import { exceptionalError } from '../constants/errors';
 
@@ -53,7 +53,10 @@ export const getBestBetLocations = async (
     const recommendations = handleSuccessfulRecommendation(
       locationForecasts as Forecast[][]
     );
-    return recommendations.filter(isWorthIt).slice(0, numberOfRecommendations);
+    return recommendations
+      .filter((rec) => !isPastForecast(rec))
+      .filter(isWorthIt)
+      .slice(0, numberOfRecommendations);
   } else {
     return exceptionalError;
   }
@@ -71,7 +74,10 @@ export const getBestBetWindowsForLocation = async (
     return windowForecasts as MagicSeaweedApiError;
   } else if (status === ApiResponseStates.SUCCESS) {
     const recommendations = (windowForecasts as Forecast[]).sort(sortForecasts);
-    return recommendations.filter(isWorthIt).slice(0, numberOfRecommendations);
+    return recommendations
+      .filter((rec) => !isPastForecast(rec))
+      .filter(isWorthIt)
+      .slice(0, numberOfRecommendations);
   } else {
     return exceptionalError;
   }

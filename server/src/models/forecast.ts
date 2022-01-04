@@ -1,3 +1,7 @@
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+
 import { Forecast, SwellForecast } from '../types';
 import spotMap from './magic-seaweed/spots';
 
@@ -9,7 +13,10 @@ export const getForecastLocationNameFromId = (spotId: string): string => {
   return correctRegionalMap?.[spotId] ?? 'Surf Spot';
 };
 
-export const sortForecasts = (forecastA: Forecast, forecastB: Forecast) =>
+export const sortForecasts = (
+  forecastA: Forecast,
+  forecastB: Forecast
+): number =>
   forecastB.solidRating - forecastA.solidRating ||
   forecastB.fadedRating - forecastA.fadedRating ||
   calculateSwellMagnitude(forecastB.swell) -
@@ -22,4 +29,13 @@ const calculateSwellMagnitude = (swell: SwellForecast): number => {
     (memo, value) => memo + value,
     0
   );
+};
+
+export const isPastForecast = (forecast: Forecast) => {
+  dayjs.extend(utc);
+  dayjs.extend(timezone);
+
+  return dayjs
+    .tz(dayjs(), 'America/New_York')
+    .isAfter(forecast.localTimestamp * 1000);
 };
